@@ -1,0 +1,9 @@
+$color: #666;
+
+body {
+	color: $color; 
+	transform: scaleX(90deg);
+	transition: all .5s;
+	animation: dodge 1s ease;
+	font:arial;
+}

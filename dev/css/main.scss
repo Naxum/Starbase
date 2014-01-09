@@ -1,9 +1,92 @@
 $color: #666;
+$ground-height: 40%;//250px
+
+html {
+    overflow: hidden;
+    height: 100%;
+}
 
 body {
-	color: $color; 
-	transform: scaleX(90deg);
-	transition: all .5s;
-	animation: dodge 1s ease;
-	font:arial;
+    height: 100%;
+    overflow: auto;
+    transition:all 3s;
+    background:linear-gradient(to top, teal + #888 100% - $ground-height, teal + #EEE);
+    
+    &.space {
+    	//do transitions between planet and space!
+    	//Mostly just background color transition
+    	background:linear-gradient(to top, black + #444, black);
+    }
+}
+
+#planet {
+	height:100%;
+	width:100%;
+	
+	/*
+	position:relative;
+	transition:transform 2s;
+	&:hover {
+		transform:translate(0, 100%);
+	}*/
+	
+	/*
+	#sky {
+		background:linear-gradient(to top, teal + #888, teal + #EEE);
+		position:fixed;
+		width:100%;
+		height: calc(100% - #{$ground-height});
+		z-index: 0;
+		display:none;
+	}*/
+	
+	#ground-container {
+		position: fixed;
+		width:100%;
+		height:$ground-height;
+		z-index: 1;
+		bottom:0;
+		background:linear-gradient(to bottom, green + #444, darkgreen - #111);
+		
+		#ground {
+			position: relative;
+			top: -$ground-height*0.8;
+			overflow-x: auto;
+			height:100%;
+			
+			#buildings {
+				height:100%;
+				
+				.building {
+					z-index: 1;
+					position: absolute;
+					width:300px;
+					height:200px;
+					background:#630;
+					display: inline-block;
+				}	
+			}
+			
+			#ground-scroll-box {
+				z-index: 0;
+				position: absolute;
+				top: $ground-height;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				cursor: ew-resize;
+				display: none;
+			}
+		}
+	}
+}
+
+#atmosphere {
+	width:100%;
+	height:100%;
+	display:none;
+}
+
+#space {
+	display:none;
 }

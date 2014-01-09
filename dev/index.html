@@ -5,11 +5,30 @@
 	<link rel="stylesheet" href="css/production.min.css">
 </head>
 <body>
-	<div id="derp">Dat node.js</div>
+	<div id="space"></div>
+	<div id="planet">
+		<!-- <div id="sky"></div> -->
+		<div id="ground-container">
+			<div id="ground">
+				<div id="buildings">
+					
+				</div>
+				<div id="ground-scroll-box"></div>
+			</div>
+		</div>
+	</div>
+	
 	<script>
+	
 	$(function(){
-		$("#derp").css("background-color", "red");
+		for(var i = 0; i < 5; i++)
+		{
+			var building = $("<div class='building'></div>");
+			building.css("transform", "translate(" + ((i * 20) + (i * 300) + 20) + "px, 0px)");
+			$("#buildings").append(building);
+		}
 	});
+	
 	</script>
 </body>
 </html>

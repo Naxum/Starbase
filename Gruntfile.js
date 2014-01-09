@@ -2,23 +2,33 @@ module.exports = function(grunt){
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		concat: {
-			dist: {
+			libs: {
 				src: [
-					'node_modules/*/dist/*.min.js',
-					'js/*.js'
+					'node_modules/*/dist/jquery.min.js',
+					'node_modules/*/dist/handlebars.min.js',
+					'dev/js-libs/**/*.js',
+					'build/js/templates.js'
 				],
-				dest: 'build/js/production.js'
+				dest: 'build/js/build.libs.js'
+			},
+			main: {
+				src: ['dev/js/**/*.js'],
+				dest: 'build/js/build.custom.js'
+			},
+			combine: {
+				src: ['build/js/build.libs.js','build/js/build.custom.min.js'],
+				dest: 'build/js/production.min.js'
 			}
-		},
+		},	
 		uglify: {
 			build: {
-				src: 'build/js/production.js',
-				dest: 'build/js/production.min.js'
+				src: 'build/js/build.custom.js',
+				dest: 'build/js/build.custom.min.js'
 			}
 		},
 		cssmin: {
 			minify: {
-				src: 'build/css/production.prefixed.css',
+				src: 'build/css/build.prefixed.css',
 				dest: 'build/css/production.min.css'
 			}
 		},
@@ -26,7 +36,7 @@ module.exports = function(grunt){
 			dynamic: {
 				files: [{
 					expand: true,
-					cwd: 'images/',
+					cwd: 'dev/images/',
 					src: ['**/*.{png,jpg,gif}'],
 					dest: 'build/images/'
 				}] 
@@ -38,20 +48,30 @@ module.exports = function(grunt){
 				atBegin: true
 			},
 			scripts: {
-				files: ['js/*.js'],
-				tasks: ['concat', 'uglify'],
+				files: ['dev/js/**/*.{js,handlebars,hbs}'],
+				tasks: ['emberTemplates','concat:libs','concat:main', 'uglify','concat:combine'],
 				options: {
 					spawn: false
 				}
 			},
 			images: {
-				files: ['images/**/*.{png,jpg,gif}'],
-				tasks: ['imagemin']
+				files: ['dev/images/**/*.{png,jpg,gif}'],
+				tasks: ['imagemin'],
+				options: {
+					spawn: false
+				}
 			},
 			css: {
-				files: ['css/*.scss'],
+				files: ['dev/css/*.scss'],
 				tasks: ['sass', 'autoprefixer', 'cssmin'],
 				options: { 
+					spawn: false
+				}
+			},
+			html: {
+				files: ['dev/**/*.html'],
+				tasks: ['copy'],
+				options: {
 					spawn: false
 				}
 			}
@@ -62,28 +82,44 @@ module.exports = function(grunt){
 				// 	style: 'compressed'
 				// },
 				files: {
-					'build/css/production.css': 'css/*.scss'
+					'build/css/build.css': 'dev/css/*.scss'
 				}
 			}
 		},
 		autoprefixer: {
 			dist: {
 				files: {
-					'build/css/production.prefixed.css': 'build/css/production.css'
+					'build/css/build.prefixed.css': 'build/css/build.css'
 				}
 			}
+		},
+		emberTemplates: {
+			compile: {
+				files: {
+					"build/js/templates.js": "dev/js/**/*.{handlebars,hbs}"
+				}
+			}
+		},
+		copy: {
+			target: {
+				expand: true,
+				cwd: 'dev/',
+				src:  ['**/*.html'],
+				dest: 'build/'
+			}
 		}
-		//achievements, objectives, impediments
-		//schedule
 	});
 	
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
+	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-imagemin');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-sass');
 	grunt.loadNpmTasks('grunt-autoprefixer');
+	grunt.loadNpmTasks('grunt-ember-templates');
 	
+	//could add custom tasks for concat here!
 	grunt.registerTask('default', ['watch']);
 }

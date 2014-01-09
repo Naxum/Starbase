@@ -15,6 +15,10 @@ module.exports = function(grunt){
 				src: ['dev/js/**/*.js'],
 				dest: 'build/js/build.custom.js'
 			},
+			css: {
+				src: ['build/css/temp/**/*.css'],
+				dest: 'build/css/build.css'
+			},
 			combine: {
 				src: ['build/js/build.libs.js','build/js/build.custom.min.js'],
 				dest: 'build/js/production.min.js'
@@ -62,8 +66,8 @@ module.exports = function(grunt){
 				}
 			},
 			css: {
-				files: ['dev/css/*.scss'],
-				tasks: ['sass', 'autoprefixer', 'cssmin'],
+				files: ['dev/css/**/*.scss'],
+				tasks: ['sass', 'concat:css', 'autoprefixer', 'cssmin'],
 				options: { 
 					spawn: false
 				}
@@ -77,13 +81,12 @@ module.exports = function(grunt){
 			}
 		},
 		sass: {
-			dist: {
-				// options: {
-				// 	style: 'compressed'
-				// },
-				files: {
-					'build/css/build.css': 'dev/css/*.scss'
-				}
+			target: {
+				expand:true,
+				cwd: 'dev/css/',
+				src:['**/*.scss'],
+				dest:'build/css/temp',
+				ext: '.css'
 			}
 		},
 		autoprefixer: {

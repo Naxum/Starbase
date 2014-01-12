@@ -1,3 +1,5 @@
+$scale = 7;
+
 module.exports = function(grunt){
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
@@ -5,7 +7,6 @@ module.exports = function(grunt){
 			libs: {
 				src: [
 					'node_modules/*/dist/jquery.min.js',
-					'node_modules/*/dist/handlebars.min.js',
 					'dev/js-libs/**/*.js',
 					'build/js/templates.js'
 				],
@@ -37,13 +38,21 @@ module.exports = function(grunt){
 			}
 		},
 		imagemin: {
-			dynamic: {
+			base: {
 				files: [{
 					expand: true,
 					cwd: 'dev/images/',
 					src: ['**/*.{png,jpg,gif}'],
 					dest: 'build/images/'
 				}] 
+			},
+			upscaled: {
+				files: [{
+					expand: true,
+					cwd: 'build/images/',
+					src: ['**/*-upscaled.{png,gif,jpg}'],
+					dest: 'build/images/'
+				}]
 			}
 		},
 		watch: {
@@ -53,14 +62,14 @@ module.exports = function(grunt){
 			},
 			scripts: {
 				files: ['dev/js/**/*.{js,handlebars,hbs}'],
-				tasks: ['emberTemplates','concat:libs','concat:main', 'uglify','concat:combine'],
+				tasks: ['concat:libs','concat:main', 'uglify','concat:combine'],
 				options: {
 					spawn: false
 				}
 			},
 			images: {
 				files: ['dev/images/**/*.{png,jpg,gif}'],
-				tasks: ['imagemin'],
+				tasks: ['imagemin:base', 'responsive_images', 'imagemin:upscaled'],
 				options: {
 					spawn: false
 				}
@@ -96,19 +105,29 @@ module.exports = function(grunt){
 				}
 			}
 		},
-		emberTemplates: {
-			compile: {
-				files: {
-					"build/js/templates.js": "dev/js/**/*.{handlebars,hbs}"
-				}
-			}
-		},
 		copy: {
 			target: {
 				expand: true,
 				cwd: 'dev/',
 				src:  ['**/*.html'],
 				dest: 'build/'
+			}
+		},
+		responsive_images: {
+			options: {
+				sizes: [{
+					name: "upscaled",
+					width: $scale+"00%",
+					height: $scale+"00%",
+					upscale: true,
+					
+				}]
+			},
+			files: {
+				expand: true,
+				src: ["**/*.{png,gif,jpg}"],
+				cwd: 'dev/images/',
+				dest: 'build/images/'
 			}
 		}
 	});
@@ -121,7 +140,7 @@ module.exports = function(grunt){
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-sass');
 	grunt.loadNpmTasks('grunt-autoprefixer');
-	grunt.loadNpmTasks('grunt-ember-templates');
+	grunt.loadNpmTasks('grunt-responsive-images');
 	
 	//could add custom tasks for concat here!
 	grunt.registerTask('default', ['watch']);

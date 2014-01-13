@@ -120,7 +120,7 @@ module.exports = function(grunt){
 					width: $scale+"00%",
 					height: $scale+"00%",
 					upscale: true,
-					
+					filter: 'Point'
 				}]
 			},
 			files: {

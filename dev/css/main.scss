@@ -16,6 +16,30 @@ body {
     //background:linear-gradient(to top, teal + #888 100% - $ground-height, teal + #EEE);
 }
 
+//add some cool stuff back here for rotating stars!
+#space-bg {
+	background: {
+		image: url('../images/warp-upscaled.png');
+		repeat:repeat;
+		position:0 0;
+	}
+	animation: warp 5s linear infinite;
+	position:fixed;
+	width:100%;
+	height:100%;
+	opacity: 0.3;
+}
+
+@keyframes warp {
+	0% {
+		background-position: 0 0;
+	}
+	100% {
+							//image width * scale * amount
+		background-position: 32px * 7 * -10 0;
+	}
+}
+
 #space {
 	height:100%;
 	width:100%;
@@ -25,6 +49,9 @@ body {
 	#station {
 		position: relative;
 		height:$section-height;
+		transition:all .35s;
+		//transform:scale(0.4);
+		//filter: brightness(0);
 		
 		.section {
 			position: absolute;
@@ -41,7 +68,7 @@ body {
 .unit {
 	position: absolute;
 	width:11px * $res-scale;
-	height:16px * $res-scale;
+	height:18px * $res-scale;
 	
 	image-rendering:optimizeSpeed;             /* Legal fallback */
 	image-rendering:-moz-crisp-edges;          /* Firefox        */
@@ -53,7 +80,7 @@ body {
 	-ms-interpolation-mode:nearest-neighbor;   /* IE8+           */
 	
 	background: {
-		image: url('../images/dude.png');
+		image: url('../images/dude-upscaled.png');
 		size: 100% 100%;
 		repeat: no-repeat;
 	}
@@ -61,6 +88,10 @@ body {
 	.uniform {
 		
 	}
+}
+
+.teleport {
+	transition: none;
 }
 
 //Ignoring planet stuff for now

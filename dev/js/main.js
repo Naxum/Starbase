@@ -1,22 +1,24 @@
-//main javascript file!
-var dicks = "Woah!";
-console.log("Dang! " + dicks); 
-
-var factions = ["Civilian", "Command", "Operations", "Science", "Military"];
-
-function Section (version, faction, xpos){
-	this.version = 1;
-	this.faction = 0;
-	this.xpos = 0;
-	//this.maintenance
-};
+//Main scripts
 
 $(function(){
-	return;
+	//return;
 	for(var i = 0; i < 5; i++)
 	{
-		var building = $("<div class='section'></div>");
-		building.css("transform", "translate(" + ((i * 20) + (i * 300) + 20) + "px, 0px)");
-		$("#station").append(building);
+		// var building = $("<div class='section'></div>");
+		// building.css("transform", "translate(" + ((i * 20) + (i*sectionWidth)) + "px, 0px)");
+		// $("#station").append(building);
+		
+		addSection(CommandFaction);
 	}
+	
+	var unit = createNewUnit(CivilianFaction, 0, 1, 3);
+	unit.moveTo(sections[0]);
+	
+	unit.$element.click(function(){
+		//unit.moveTo(sections[Math.floor(Math.random()*sections.length)]);
+		unit.actions.push(newWanderAction(this));
+		unit.doNextAction();
+	});
+	
+	console.log("Hello there.");
 });

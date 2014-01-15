@@ -1,6 +1,20 @@
 $color: #666;
-$section-height:200px;
-$res-scale: 7;
+$scale: 5;
+$height: 20;
+
+$section-height: $scale * $height * 2px;
+$section-width: $scale * $height * 4px;
+
+@mixin pixel-render() {
+	image-rendering:optimizeSpeed;             /* Legal fallback */
+	image-rendering:-moz-crisp-edges;          /* Firefox        */
+	image-rendering:-o-crisp-edges;            /* Opera          */
+	image-rendering:-webkit-optimize-contrast; /* Safari         */
+	image-rendering:optimize-contrast;         /* CSS3 Proposed  */
+	image-rendering:crisp-edges;               /* CSS4 Proposed  */
+	image-rendering:pixelated;                 /* CSS4 Proposed  */
+	-ms-interpolation-mode:nearest-neighbor;   /* IE8+           */
+}
 
 html {
     overflow: hidden;
@@ -36,7 +50,7 @@ body {
 	}
 	100% {
 							//image width * scale * amount
-		background-position: 32px * $res-scale * -10 0;
+		background-position: 32px * $scale * -10 0;
 	}
 }
 
@@ -49,6 +63,7 @@ body {
 	#station {
 		position: relative;
 		height:$section-height;
+		width:100%;
 		transition:all .35s;
 		//transform:scale(0.4);
 		//filter: brightness(0);
@@ -57,27 +72,34 @@ body {
 			position: absolute;
 			top: 0;
 			left:0;
-			width:300px;
+			//width:300px;
+			//height:$section-height;
+			width:$section-width;
 			height:$section-height;
+			
 			background:orange;
 			margin-left: 20px;
+			
+			.units {
+				position: absolute;
+				bottom: 0px;
+				height: $section-height/2;
+				padding:0 10px;
+				
+				//not sure if needed
+				width:100%;
+				box-sizing:border-box;
+			}
 		}
 	}
 }
 
 .unit {
 	position: absolute;
-	width:11px * $res-scale;
-	height:18px * $res-scale;
-	
-	image-rendering:optimizeSpeed;             /* Legal fallback */
-	image-rendering:-moz-crisp-edges;          /* Firefox        */
-	image-rendering:-o-crisp-edges;            /* Opera          */
-	image-rendering:-webkit-optimize-contrast; /* Safari         */
-	image-rendering:optimize-contrast;         /* CSS3 Proposed  */
-	image-rendering:crisp-edges;               /* CSS4 Proposed  */
-	image-rendering:pixelated;                 /* CSS4 Proposed  */
-	-ms-interpolation-mode:nearest-neighbor;   /* IE8+           */
+	width:11px * $scale;
+	height:18px * $scale;
+	cursor:pointer;
+	transform-origin:bottom center;
 	
 	background: {
 		image: url('../images/dude-upscaled.png');
@@ -85,15 +107,27 @@ body {
 		repeat: no-repeat;
 	}
 	
+	@include pixel-render();
+	
+	.flipper {
+		width:100%;
+		height:100%;
+		position:absolute;
+		opacity:0.3;
+		background:linear-gradient(to right, red, blue);
+	}
+	
 	.uniform {
 		
-	}
+	}	
 }
 
 .teleport {
 	transition: none;
 }
 
+
+/*
 //Ignoring planet stuff for now
 $ground-height: 40%;//250px
 #planet {
@@ -149,3 +183,4 @@ $ground-height: 40%;//250px
 	height:100%;
 	display:none;
 }
+*/

@@ -1,4 +1,4 @@
-$scale = 7;
+$scale = 5;
 
 module.exports = function(grunt){
 	grunt.initConfig({
@@ -21,7 +21,8 @@ module.exports = function(grunt){
 				dest: 'build/css/build.css'
 			},
 			combine: {
-				src: ['build/js/build.libs.js','build/js/build.custom.min.js'],
+				/*src: ['build/js/build.libs.js','build/js/build.custom.min.js'],*/
+				src: ['build/js/build.libs.js','build/js/build.custom.js'],
 				dest: 'build/js/production.min.js'
 			}
 		},	

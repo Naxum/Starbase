@@ -45,13 +45,8 @@ body {
 }
 
 @keyframes warp {
-	0% {
-		background-position: 0 0;
-	}
-	100% {
-							//image width * scale * amount
-		background-position: 32px * $scale * -10 0;
-	}
+	from { background-position: 0 0; }
+	to { background-position: 32px * $scale * -10 0; }
 }
 
 #space {
@@ -101,20 +96,20 @@ body {
 	cursor:pointer;
 	transform-origin:bottom center;
 	
-	background: {
-		image: url('../images/dude-upscaled.png');
-		size: 100% 100%;
-		repeat: no-repeat;
-	}
-	
 	@include pixel-render();
 	
 	.flipper {
 		width:100%;
 		height:100%;
 		position:absolute;
-		opacity:0.3;
-		background:linear-gradient(to right, red, blue);
+		//opacity:0.3;
+		//background:linear-gradient(to right, red, blue);
+		
+		background: {
+			image: url('../images/dude-upscaled.png');
+			size: 100% 100%;
+			repeat: no-repeat;
+		}
 	}
 	
 	.uniform {
@@ -126,6 +121,29 @@ body {
 	transition: none;
 }
 
+footer {
+	position:fixed;
+	bottom:0;
+	text-align:center;
+	width:100%;
+	
+	ul {
+		list-style:none;
+		
+		li {
+			margin:7px 10px;
+			display:inline-block;
+			color:white;
+			text-shadow:0px 2px 0px black;
+			font-size:small;
+			
+			&:not(:first-child):before {
+				content: '|';
+				margin-right:20px;
+			}
+		}
+	}
+}
 
 /*
 //Ignoring planet stuff for now

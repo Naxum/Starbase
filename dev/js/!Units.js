@@ -64,8 +64,7 @@ function Unit (data) {
 	};
 	
 	this.walkTo = function(percent){
-		console.log("Changing translateX to '"+(percent*(sectionWidth-this.$element.width()-20))+"'");
-		this.$element.css({translate: [percent*(sectionWidth-this.$element.width()-20), 0]});
+		this.$element.css({x: percent*(sectionWidth-this.$element.width()-20)});
 	};
 	
 	this.setFlipped = function(bool){

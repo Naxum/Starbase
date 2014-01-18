@@ -145,33 +145,37 @@ body {
 	
 	@include pixel-render();
 	
-	.flipper {
+	.transform {
 		width:100%;
 		height:100%;
-		position:absolute;
+		position:relative;
 		//opacity:0.3;
 		//background:linear-gradient(to right, red, blue);
 		
 		background: {
-			image: url('../images/dude-upscaled.png');
+			//image: url('../images/dude-upscaled.png');
 			size: 100% 100%;
 			repeat: no-repeat;
 		}
 		
-		.badge {
-			
-		}
-		
 		.decoration {
-			
+			@include pixel-render();
 		}
 		
-		.uniform {
-			
+		.uniform,
+		.badge {
+			@include pixel-render();
+			width:11px * $scale;
+			height:8px * $scale;
+			position:absolute;
+			bottom:0;
 		}
 		
 		.skin {
-			
+			@include pixel-render();
+			background-position:top;
+			width:100%;
+			height:100%;
 		}
 	}	
 }

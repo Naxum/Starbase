@@ -12,3 +12,7 @@ var OperationsFaction = new Enumerator(2, "operations");
 var ScienceFaction = new Enumerator(3, "science");
 
 var Factions = [CivilianFaction, CommandFaction, OperationsFaction, ScienceFaction];
+
+function randomFaction(){
+	return Factions[Math.floor(Math.random() * Factions.length)];
+}

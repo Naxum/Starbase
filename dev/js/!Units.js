@@ -1,9 +1,9 @@
 //Units
 
 var units = [];
-var maleNames = ["Jack", "John", "Luke", "William", "Will", "Jake", "Andy", "Andreas", "Paul", "Colby", "Scott", "Sam", "Samuel", "Jay", "James"];
-var femaleNames = ["Jill", "Jane", "Brianna", "Dayna", "Sarah", "Katrina", "Amanda", "Hannah", "Tina", "Meghan", "Bonny", "Abby", "Sam", "Samantha"];
-var lastNames = ["Smith", "Sparks", "Sawyer", "Pfost", "LaTourette", "Kinchla", "Handy", "Curry", "Pilgrim", "Picard", "Riker", "Gove", "Gough", "Gatsby", "Gatz"]
+var maleNames = ["Jack", "John", "Luke", "William", "Will", "Jake", "Andy", "Andreas", "Paul", "Colby", "Scott", "Sam", "Samuel", "Jay", "James", "Jake", "Jacob"];
+var femaleNames = ["Jill", "Jane", "Jennifer", "Jen", "Brianna", "Dayna", "Sarah", "Katrina", "Amanda", "Hannah", "Tina", "Meghan", "Bonny", "Abby", "Sam", "Samantha"];
+var lastNames = ["Doe", "Smith", "Sparks", "Sawyer", "Pfost", "LaTourette", "Kinchla", "Handy", "Curry", "Pilgrim", "Picard", "Riker", "Gove", "Gough", "Gatsby", "Gatz"];
 
 function createNewUnit(faction, rank, attack, health){
 	var data = {
@@ -50,7 +50,7 @@ function Unit (data) {
 			this.firstName = maleNames[Math.floor(Math.random() * maleNames.length)];
 		} else if(this.sex == 'Female')	{
 			this.firstName = femaleNames[Math.floor(Math.random() * femaleNames.length)];
-		} else {
+		} else { //maybe aliums have different sexies
 			console.log("Unknown unit sex, unsupported naming convention: " + this.sex);
 		}
 		
@@ -68,11 +68,25 @@ function Unit (data) {
 	//html elements
 	//add ability to blink/smile? later
 	this.$element = $("<div class='unit'></div>"); //whole node object
-	this.$flipper = $("<div class='flipper'></div>").appendTo(this.$element); //for changing direction
-	this.$uniform = $("<div class='uniform'></div>").appendTo(this.$flipper); //colored, animates
-	this.$skin = $("<div class='skin'></div>").appendTo(this.$flipper); //skin color (hue-rotatable)
-	this.$decoration = $("<div class='decoration'></div>").appendTo(this.$flipper); //face decorations
-	this.$badge = $("<div class='badge'></div>").appendTo(this.$flipper); //rank button to show rank
+	this.$transform = $("<div class='transform'></div>").appendTo(this.$element); //for changing direction
+	this.$uniform = $("<div class='uniform'></div>").appendTo(this.$transform); //colored, animates
+	this.$skin = $("<div class='skin'></div>").appendTo(this.$transform); //skin color (hue-rotatable)
+	this.$decoration = $("<div class='decoration'></div>").appendTo(this.$transform); //face decorations
+	this.$badge = $("<div class='badge'></div>").appendTo(this.$transform); //rank button to show rank
+	
+	this.$uniform.css({
+		background: 'url("images/'+this.faction.name+'-uniform-upscaled.png")'
+	});
+	
+	if(this.faction != CivilianFaction) {
+		this.$badge.css({
+			background: 'url("images/rank-'+this.rank+'-upscaled.png")'
+		});
+	}
+	//check for variation type stuffs later
+	this.$skin.css({
+		background: 'url("images/skin-upscaled.png")'
+	});
 	
 	//actions
 	this.actions = [];
@@ -86,7 +100,7 @@ function Unit (data) {
 	};
 	
 	this.setFlipped = function(bool, time){
-		this.$flipper.css({scale: [bool ? -1 : 1, 1]});
+		this.$transform.css({scale: [bool ? -1 : 1, 1]});
 	};
 	
 	//add functionality of importance?

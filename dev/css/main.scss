@@ -43,7 +43,7 @@ html {
 body {
     height: 100%;
     overflow: auto;
-    transition:all 3s;
+    //transition:all 3s;
     background:linear-gradient(to top, black + #444, black);
     
     //background:linear-gradient(to top, teal + #888 100% - $ground-height, teal + #EEE);
@@ -79,55 +79,58 @@ body {
 		height:$section-height;
 		width:100%;
 		transition:all .35s;
+		list-style:none;
 		//transform:scale(0.4);
 		//filter: brightness(0);
+	}
+}
+
+.section {
+	display:inline-block;
+	position: relative;
+	width:$section-width;
+	height:$section-height;
+	
+	background:white;
+	margin-right:20px;
+	
+	&:first-child {
+		margin-left:20px;
+	}
+	
+	@include faction-colors();
+	
+	.units {
+		position: absolute;
+		bottom: 0px;
+		height: $section-height/2;
+		padding:0 10px;
 		
-		.section {
-			position: absolute;
-			top: 0;
-			left:0;
-			//width:300px;
-			//height:$section-height;
-			width:$section-width;
-			height:$section-height;
+		//not sure if needed
+		width:100%;
+		box-sizing:border-box;
+		
+		.terminals {
+			position:absolute;
+			bottom:0;
+			width: calc(100% - #{$door-width} - 20px);
+			margin-left:$door-width;
+			margin-right:10px;
+			height:100%;
 			
-			background:white;
+			//background:#999;
+			display:flex;
+			align-items:flex-end;
+			justify-content: space-around;
 			
-			@include faction-colors();
-			
-			.units {
-				position: absolute;
-				bottom: 0px;
-				height: $section-height/2;
-				padding:0 10px;
+			.terminal {
+				width:$door-width;
+				height:100%;
+				background:white;
+				display:inline-block;
+				bottom:0px;
 				
-				//not sure if needed
-				width:100%;
-				box-sizing:border-box;
-				
-				.terminals {
-					position:absolute;
-					bottom:0;
-					width: calc(100% - #{$door-width} - 20px);
-					margin-left:$door-width;
-					margin-right:10px;
-					height:100%;
-					
-					//background:#999;
-					display:flex;
-					align-items:flex-end;
-					justify-content: space-around;
-					
-					.terminal {
-						width:$door-width;
-						height:100%;
-						background:white;
-						display:inline-block;
-						bottom:0px;
-						
-						@include faction-colors();
-					}
-				}
+				@include faction-colors();
 			}
 		}
 	}

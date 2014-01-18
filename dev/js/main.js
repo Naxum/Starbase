@@ -1,7 +1,36 @@
 //Main scripts
 
 $(function(){
-	//return;
+	
+	/*$("#station").mousewheel(function(event, delta) {
+		this.scrollLeft -= (delta * 30);
+		console.log("derp", delta, event);
+		event.preventDefault();
+  	});*/
+
+	$("#station").sly({
+		horizontal: true,
+		itemNav: 'forceCentered',
+		smart: 1,
+		activateOn: 'click',
+		mouseDragging: 1,
+		touchDragging: 1,
+		releaseSwing: 1,
+		//startAt: 3,
+		//scrollBar: $wrap.find('.scrollbar'),
+		scrollBy: 1,
+		//pagesBar: $wrap.find('.pages'),
+		//activatePageOn: 'click',
+		speed: 100,
+		elasticBounds: 1,
+		//easing: 'easeOutExpo', 
+		dragHandle: 1,
+		dynamicHandle: 1,
+		clickBar: 1,
+		//itemSelector: '.section'
+		//itemNav:'basic'
+	});
+	
 	for(var i = 0; i < 5; i++)
 	{
 		// var building = $("<div class='section'></div>");

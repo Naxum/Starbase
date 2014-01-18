@@ -11,13 +11,13 @@ function Section (version, faction, index){
 	this.index = index;
 	//this.maintenance
 	
-	this.$element = $("<div class='section "+faction.name+"'></div>");
+	this.$element = $("<li class='section "+faction.name+"'></li>");
 	this.$units = $("<div class='units'></div>").appendTo(this.$element);
 	this.$terminals = $("<div class='terminals'></div>").appendTo(this.$units);
-	
+	/*
 	this.reposition = function(){
 		this.$element.css("transform", "translate(" + (((this.index+1) * 20) + (this.index*sectionWidth)) + "px, 0px)");
-	};
+	};*/
 	
 	for(var i = 0; i < Math.random() * 6; i++)
 	{
@@ -27,7 +27,8 @@ function Section (version, faction, index){
 
 function addSection(faction) {
 	var section = new Section(1, faction, sections.length);
-	section.reposition();
-	section.$element.appendTo("#station");
+	//section.reposition();
+	//section.$element.appendTo("#section-container");
+	$("#station").sly('add', section.$element);
 	sections.push(section);
 }

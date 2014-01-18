@@ -1,6 +1,9 @@
 //Units
 
 var units = [];
+var maleNames = ["Jack", "John", "Luke", "William", "Will", "Jake", "Andy", "Andreas", "Paul", "Colby", "Scott", "Sam", "Samuel", "Jay", "James"];
+var femaleNames = ["Jill", "Jane", "Brianna", "Dayna", "Sarah", "Katrina", "Amanda", "Hannah", "Tina", "Meghan", "Bonny", "Abby", "Sam", "Samantha"];
+var lastNames = ["Smith", "Sparks", "Sawyer", "Pfost", "LaTourette", "Kinchla", "Handy", "Curry", "Pilgrim", "Picard", "Riker", "Gove", "Gough", "Gatsby", "Gatz"]
 
 function createNewUnit(faction, rank, attack, health){
 	var data = {
@@ -20,8 +23,10 @@ function createNewUnit(faction, rank, attack, health){
 
 function Unit (data) {
 	//constructed variables
-	this.name;
-	this.currentSection;
+	this.firstName;
+	this.lastName;
+	this.sex;
+	this.currentSection; 
 	this.currentPosition = 0;
 	
 	//data variables
@@ -31,8 +36,26 @@ function Unit (data) {
 	this.health = data.health;
 	this.attack = data.attack;
 
-	if(data.hasOwnProperty('name'))
-		this.name = data.name;
+	if(data.hasOwnProperty('sex'))
+		this.sex = data.sex;
+	else 
+		this.sex = Math.random() < 0.5 ? 'Male' : 'Female';
+
+	if(data.hasOwnProperty('firstName') && data.hasOwnProperty('lastName')) {
+		this.firstName = data.firstName;
+		this.lastName = data.lastName;
+	} else {
+		//name generation
+		if(this.sex == 'Male') {
+			this.firstName = maleNames[Math.floor(Math.random() * maleNames.length)];
+		} else if(this.sex == 'Female')	{
+			this.firstName = femaleNames[Math.floor(Math.random() * femaleNames.length)];
+		} else {
+			console.log("Unknown unit sex, unsupported naming convention: " + this.sex);
+		}
+		
+		this.lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+	}
 	
 	if(data.hasOwnProperty('currentSection'))
 		this.currentSection = data.currentSection;
@@ -43,31 +66,26 @@ function Unit (data) {
 	}
 	
 	//html elements
-	this.$element = $("<div class='unit'></div>"); 	  //whole node object
+	//add ability to blink/smile? later
+	this.$element = $("<div class='unit'></div>"); //whole node object
 	this.$flipper = $("<div class='flipper'></div>").appendTo(this.$element); //for changing direction
-	this.$uniform; 	  //colored uniform, this animates with a walking anim
-	this.$skin; 	  //skin color (hue-rotatable)
-	this.$decoration; //face decorations
-	this.$rankBlip;	  //rank button to show rank
+	this.$uniform = $("<div class='uniform'></div>").appendTo(this.$flipper); //colored, animates
+	this.$skin = $("<div class='skin'></div>").appendTo(this.$flipper); //skin color (hue-rotatable)
+	this.$decoration = $("<div class='decoration'></div>").appendTo(this.$flipper); //face decorations
+	this.$badge = $("<div class='badge'></div>").appendTo(this.$flipper); //rank button to show rank
 	
 	//actions
 	this.actions = [];
 	
 	//don't forget about needs, wants, friends, orders, morale, etc
 	
-	this.setTransition = function(time){
-		this.$element.css({transition: "all "+time+"s"});
+	this.walkTo = function(percent, time){
+		this.$element.transition({x: percent*(sectionWidth-this.$element.width()-20)},time,'ease', function(){
+			//movment complete
+		});
 	};
 	
-	this.removeTransition = function(){
-		this.$element.css({transition: 'none'});
-	};
-	
-	this.walkTo = function(percent){
-		this.$element.css({x: percent*(sectionWidth-this.$element.width()-20)});
-	};
-	
-	this.setFlipped = function(bool){
+	this.setFlipped = function(bool, time){
 		this.$flipper.css({scale: [bool ? -1 : 1, 1]});
 	};
 	
@@ -109,8 +127,7 @@ function Unit (data) {
 				if(this.currentPosition - x < 0) this.setFlipped(true);
 				else this.setFlipped(false);
 				
-				this.setTransition(10*distance);
-				this.walkTo(x);
+				this.walkTo(x, 10000*distance);
 				this.currentPosition = x;
 				break;
 		}

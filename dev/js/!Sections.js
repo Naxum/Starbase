@@ -11,11 +11,18 @@ function Section (version, faction, index){
 	this.index = index;
 	//this.maintenance
 	
-	this.$element = $("<div class='section'></div>");
+	this.$element = $("<div class='section "+faction.name+"'></div>");
 	this.$units = $("<div class='units'></div>").appendTo(this.$element);
+	this.$terminals = $("<div class='terminals'></div>").appendTo(this.$units);
+	
 	this.reposition = function(){
-		this.$element.css("transform", "translate(" + ((this.index * 20) + (this.index*sectionWidth)) + "px, 0px)");
+		this.$element.css("transform", "translate(" + (((this.index+1) * 20) + (this.index*sectionWidth)) + "px, 0px)");
 	};
+	
+	for(var i = 0; i < Math.random() * 6; i++)
+	{
+		$("<div class='terminal'></div>").appendTo(this.$terminals);
+	}
 };
 
 function addSection(faction) {

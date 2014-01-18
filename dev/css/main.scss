@@ -1,9 +1,11 @@
 $color: #666;
-$scale: 5;
+$scale: 4;
 $height: 20;
 
 $section-height: $scale * $height * 2px;
-$section-width: $scale * $height * 4px;
+$section-width: $scale * $height * 5px;
+
+$door-width: 50px;
 
 @mixin pixel-render() {
 	image-rendering:optimizeSpeed;             /* Legal fallback */
@@ -14,6 +16,23 @@ $section-width: $scale * $height * 4px;
 	image-rendering:crisp-edges;               /* CSS4 Proposed  */
 	image-rendering:pixelated;                 /* CSS4 Proposed  */
 	-ms-interpolation-mode:nearest-neighbor;   /* IE8+           */
+}
+@mixin faction-colors(){
+	&.command {
+		background:red;
+	}
+	
+	&.operations {
+		background:orange;
+	}
+	
+	&.science {
+		background:aqua;
+	}
+	
+	&.civilian {
+		background:grey;
+	}
 }
 
 html {
@@ -72,8 +91,9 @@ body {
 			width:$section-width;
 			height:$section-height;
 			
-			background:orange;
-			margin-left: 20px;
+			background:white;
+			
+			@include faction-colors();
 			
 			.units {
 				position: absolute;
@@ -84,6 +104,30 @@ body {
 				//not sure if needed
 				width:100%;
 				box-sizing:border-box;
+				
+				.terminals {
+					position:absolute;
+					bottom:0;
+					width: calc(100% - #{$door-width} - 20px);
+					margin-left:$door-width;
+					margin-right:10px;
+					height:100%;
+					
+					//background:#999;
+					display:flex;
+					align-items:flex-end;
+					justify-content: space-around;
+					
+					.terminal {
+						width:$door-width;
+						height:100%;
+						background:white;
+						display:inline-block;
+						bottom:0px;
+						
+						@include faction-colors();
+					}
+				}
 			}
 		}
 	}
@@ -110,10 +154,22 @@ body {
 			size: 100% 100%;
 			repeat: no-repeat;
 		}
-	}
-	
-	.uniform {
 		
+		.badge {
+			
+		}
+		
+		.decoration {
+			
+		}
+		
+		.uniform {
+			
+		}
+		
+		.skin {
+			
+		}
 	}	
 }
 

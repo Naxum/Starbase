@@ -1,4 +1,4 @@
-$scale = 5;
+$scale = 4;
 
 module.exports = function(grunt){
 	grunt.initConfig({

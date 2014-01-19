@@ -27,6 +27,7 @@ function Unit (data) {
 	this.lastName;
 	this.sex;
 	this.currentSection; 
+	this.currentTerminal;
 	this.currentPosition = 0;
 	
 	//data variables
@@ -78,7 +79,7 @@ function Unit (data) {
 		background: 'url("images/'+this.faction.name+'-uniform-upscaled.png")'
 	});
 	
-	if(this.faction != CivilianFaction) {
+	if(this.faction != CivilianFaction && this.rank > 0) {
 		this.$badge.css({
 			background: 'url("images/rank-'+this.rank+'-upscaled.png")'
 		});
@@ -93,8 +94,30 @@ function Unit (data) {
 	
 	//don't forget about needs, wants, friends, orders, morale, etc
 	
+	this.useTerminal = function(terminal){
+		this.leaveTerminal();
+		
+		//remove all previous actions
+		
+		this.currentTerminal = terminal;
+		terminal.setUnit(this);
+		
+		this.$element.appendTo(terminal.$element);
+	}
+	
+	this.leaveTerminal = function() {
+		if(this.currentTerminal != null)
+		{
+			this.currentTerminal.removeUnit();
+			this.currentTerminal = null;
+			
+			//move this.$element out of the terminal
+			//this.$element.
+		}
+	}
+	
 	this.walkTo = function(percent, time){
-		this.$element.transition({x: percent*(sectionWidth-this.$element.width()-20)},time,'ease', function(){
+		this.$element.transition({x: percent*(sectionWidth-this.$element.width()-20)},time,'linear', function(){
 			//movment complete
 		});
 	};

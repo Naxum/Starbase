@@ -73,6 +73,8 @@ body {
 	width:100%;
 	display:flex;
 	align-items:center;
+	align-content:center;
+	flex-flow:row wrap;
 	
 	#station {
 		position: relative;
@@ -80,8 +82,43 @@ body {
 		width:100%;
 		transition:all .35s;
 		list-style:none;
+		
+		opacity: 0;
 		//transform:scale(0.4);
 		//filter: brightness(0);
+	}
+	
+	#stats {
+		width:calc(100% - 20px);
+		padding:20px;
+		position:relative;
+		margin:10px 20px;
+		box-sizing:border-box;
+		text-align: center;
+		
+		background:grey;
+		
+		#timer {
+			position:absolute;
+			z-index: 0;
+			top:0;
+			left:0;
+			height: 100%;
+			background:yellow - #555;
+		}
+		
+		.stat {
+			position:relative;
+			display:inline-block;
+			padding:7px 10px;
+			background:white;
+		}
+		
+		#money:before {	content: '$' }
+		#crystals:before { content: 'C' }
+		#command:before { content: 'Cmd '}
+		#power:before { content: 'Pwr '}
+		#science:before { content: 'Sci '}
 	}
 }
 
@@ -94,11 +131,27 @@ body {
 	background:white;
 	margin-right:20px;
 	
+	@include faction-colors();
+	
 	&:first-child {
 		margin-left:20px;
 	}
 	
-	@include faction-colors();
+	&:not(.active) {
+		cursor:pointer;
+	}
+	
+	&.new {
+		background:transparent;
+		box-sizing:border-box;
+		border:10px dashed white;
+		transition:all .5s;
+		cursor: pointer;
+		
+		&:hover {
+			background:grey;
+		}
+	}
 	
 	.units {
 		position: absolute;
@@ -112,11 +165,13 @@ body {
 		
 		.terminals {
 			position:absolute;
-			bottom:0;
+			bottom:25px;
+			z-index:0;
 			width: calc(100% - #{$door-width} - 20px);
 			margin-left:$door-width;
 			margin-right:10px;
 			height:100%;
+			//pointer-events:none;
 			
 			//background:#999;
 			display:flex;
@@ -129,10 +184,23 @@ body {
 				background:white;
 				display:inline-block;
 				bottom:0px;
+				transition:all .15s;
+				//pointer-events:all;
+				border-bottom:4px solid black;
 				
 				@include faction-colors();
 			}
 		}
+	}
+	
+	&.active .terminal:hover {
+		background:green;
+		cursor:pointer;
+	}
+	
+	&.active .terminal:active {
+		border-bottom:0px;
+		// transform:translateY(4px);
 	}
 }
 
@@ -140,6 +208,7 @@ body {
 	position: absolute;
 	width:11px * $scale;
 	height:18px * $scale;
+	z-index:1;
 	cursor:pointer;
 	transform-origin:bottom center;
 	

@@ -23,9 +23,9 @@ function refreshStats(){
 }
 
 function resetTimerBar(){
-	$('#timer').css({
+	$('#timer').transition({
 		width: '0px'
-	});
+	}, 0);
 	
 	$('#timer').transition({
 		width: '100%'

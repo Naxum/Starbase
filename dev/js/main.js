@@ -16,7 +16,7 @@ $(function(){
 		horizontal: true,
 		itemNav: 'forceCentered',
 		smart: 1,
-		activateOn: 'click',
+		activateOn: 'click touchend',
 		mouseDragging: 1,
 		touchDragging: 1,
 		releaseSwing: 1,
@@ -49,7 +49,7 @@ $(function(){
 	var unit = createNewUnit(randomFaction(), Math.floor(Math.random()*5), 1, 3);
 	unit.moveTo(sections[0]);
 	
-	unit.$element.click(function(){
+	unit.$element.on('click touchend', function(){
 		//unit.moveTo(sections[Math.floor(Math.random()*sections.length)]);
 		
 		//unit.actions.push(newWanderAction(this));
@@ -60,7 +60,7 @@ $(function(){
 		//unit.$element.appendTo(sections[0].$terminals.find(".terminal")[0]);
 	});
 	
-	$(".terminal").click(function(){
+	$(".terminal").on('touchend click', function(){
 		if($(this).parents(".active").length != 0)
 			changeMoney(1);
 	});

@@ -73,7 +73,7 @@ $(function(){
 		//else
 		if($(this).hasClass("closed"))
 		{
-			$("#interface .ui-slot.open").removeClass("open").addClass("closed");
+			$("#interface .ui-slot.open:not(.unclosable)").removeClass("open").addClass("closed");
 			$(this).removeClass("closed").addClass("open");
 		}
 	});
@@ -87,6 +87,10 @@ $(function(){
 	
 	$(window).resize(function(e) {
 		$("#station").sly('reload');
+	});
+	
+	$(document).on('touchmove', function(event){
+		event.preventDefault();
 	});
 });
 

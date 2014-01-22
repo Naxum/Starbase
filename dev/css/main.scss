@@ -1,11 +1,11 @@
 $color: #666;
-$scale: 4;
+$scale: 5;
 $height: 20;
 
 $section-height: $scale * $height * 2px;
 $section-width: $scale * $height * 5px;
 
-$door-width: 50px;
+$door-width: 55px;
 
 @mixin pixel-render() {
 	image-rendering:optimizeSpeed;             /* Legal fallback */
@@ -43,10 +43,20 @@ html {
 body {
     height: 100%;
     overflow: auto;
-    //transition:all 3s;
     background:linear-gradient(to top, black + #444, black);
-    
-    //background:linear-gradient(to top, teal + #888 100% - $ground-height, teal + #EEE);
+}
+
+#broken {
+	display:none;
+	padding:10px 15px;
+	background:red;
+	color:white;
+	font-size:large;
+	border-radius:50px;
+	text-align:center;
+	width:50%;
+	margin:0 auto;
+	position:relative;
 }
 
 //add some cool stuff back here for rotating stars!
@@ -122,24 +132,25 @@ body {
 	}
 	
 	#interface {
+		$interface-height: 250px;
+		$interface-width: 450px;
 		width:100%;
 		text-align: center;
 		margin-bottom:5px;
+		height:$interface-height + 2;
+		overflow:hidden;
 		
 		#portrait {
-			width:200px;
-			height:200px;
-			display:inline-block;
-			transition: all .25s;
-			overflow:hidden;
-			margin-right:2px;
-			background:white;
+			width: $interface-height;
+			.content {
+				width:$interface-height;
+			}
 		}
 		
 		.ui-slot {
 			overflow:hidden;
-			transition:all .25s;
-			height:200px;
+			transition:all .15s;
+			height:$interface-height;
 			position:relative;
 			display:inline-block;
 			margin:0 2px;
@@ -148,7 +159,7 @@ body {
 				position:absolute;
 				top:0;
 				left:0;
-				transition:all .25s;
+				transition:all .15s;
 				overflow:hidden;
 				display:flex;
 				height:100%;
@@ -163,11 +174,11 @@ body {
 			}
 			
 			.content.opened {
-				width:400px;
+				width:$interface-width;
 			}
 			
 			&.open {
-				width:400px;
+				width:$interface-width;
 				background:white;
 				
 				.content.closed {
@@ -405,3 +416,10 @@ $ground-height: 40%;//250px
 	display:none;
 }
 */
+
+@media (max-width: 890px){
+	body { display:flex; align-items:center; }
+	#space { display: none; }
+	footer { display: none; }
+	#broken { display:block; }
+}

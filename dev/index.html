@@ -2,17 +2,22 @@
 <head>
 	<title>test</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-capable" content="yes">
 	
 	<link rel="stylesheet" href="css/production.min.css">
 </head>
 <body>
+
 	<div id="space-bg">
+	</div>
+	
+	<div id="broken">
+		Sorry, your browser is too small to play the game :(
 	</div>
 	
 	<div id="space">
 		<div id="interface">
-			<div id="portrait">Portrait</div>
+			<div id="portrait" class="ui-slot open unclosable"><div class="content">Portrait</div></div>
 			<div class="ui-slot closed">
 				<div class="content closed"><div class="title">Stats</div></div>
 				<div class="content opened">Stats opened</div>

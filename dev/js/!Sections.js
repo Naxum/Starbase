@@ -1,6 +1,6 @@
 //Sections
 
-var sectionWidth = 400;
+var sectionWidth = 500;
 var sectionVersion = 1;
 
 var sections = [];

@@ -65,6 +65,19 @@ $(function(){
 			changeMoney(1);
 	});
 	
+	$("#interface .ui-slot").on('touchend click', function(){
+		//if($(this).hasClass("open"))
+		//{
+		//	$(this).removeClass("open").addClass("closed");
+		//}
+		//else
+		if($(this).hasClass("closed"))
+		{
+			$("#interface .ui-slot.open").removeClass("open").addClass("closed");
+			$(this).removeClass("closed").addClass("open");
+		}
+	});
+	
 	$("#station").transition({opacity:1, delay: 500}, 500);
 	
 	console.log("Hello there.");

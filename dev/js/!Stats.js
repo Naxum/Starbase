@@ -1,33 +1,18 @@
 //Stats functions
+var Resources = [
+	{ name: "money", amount: 0, $element:$("#money") },
+	{ name: "power", amount: 0, $element:$("#power") },
+	{ name: "science", amount: 0, $element:$("#science") },
+	{ name: "command", amount: 0, $element:$("#command") },
+	{ name: "crystals", amount: 0, $element:$("#crystals") }
+];
 
-var $money = $("#money");
-var $crystals = $("#crystals");
-var $power = $("#power");
-var $science = $("#science");
-var $command = $("#command");
-
-function changeMoney(amount){
-	money += amount;
+function addResource(resourceObj){
+	var index = 0;
+	for(; index < Resources.length; index++) {
+		if(Resources[index].name == resourceObj.name) break;
+	}
 	
-	if(money < 0) money = 0;
-	
-	$money.text(money);
-}
-
-function refreshStats(){
-	$money.text(money);
-	$crystals.text(crystals);
-	$power.text(power);
-	$science.text(science);
-	$command.text(command);
-}
-
-function resetTimerBar(){
-	$('#timer').transition({
-		width: '0px'
-	}, 0);
-	
-	$('#timer').transition({
-		width: '100%'
-	}, currentTimeout, 'linear');
+	Resources[index].amount += resourceObj.amount;
+	Resources[index].$element.text(Resources[index].amount);
 }

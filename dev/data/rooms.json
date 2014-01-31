@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"rooms": [
+		{
+			"name": "Room",
+			"description": "Room description, what it does.",
+			"cost": [
+				{ "type": "money", "amount": 50 }
+			],
+			"resources" : [
+				{ "type": "money", "amount": 5 },
+				{ "type": "power", "amount": 2 },
+				{ "type": "command", "amount": 1 }
+			],
+			"terminals" : [
+				{ "faction": 0, "unit": "" },
+				{ "faction": 2,	"unit": "" }
+			]
+		}
+	]
+}

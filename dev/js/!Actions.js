@@ -1,10 +1,6 @@
 //Actions
 
 //Action types
-function Enumerator (index, name) {
-	this.index = index;
-	this.name = name;
-}
 
 var MoveAction = new Enumerator(0, "move");
 var WanderAction = new Enumerator(1, "wander");

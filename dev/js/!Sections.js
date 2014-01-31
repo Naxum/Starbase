@@ -5,26 +5,71 @@ var sectionVersion = 1;
 
 var sections = [];
 
-function Section (version, faction, index){
-	this.version = version;
-	this.faction = faction;
-	this.index = index;
-	this.multiplier = 1;
-	//this.maintenance
+function Section (data){
+	this.id = data.id; //uuid (string)
+	this.name = data.name; //string
+	this.description = data.description; //string
+	this.progress = 0; //float-percentage to completion
+	this.completionTime = 0; //time in miliseconds
 	
-	this.$element = $("<li class='section "+faction.name+"'></li>");
+	this.cost = data.cost || []; //money object array
+	this.resources = data.resources || []; //money object array
+	this.terminals = []; //terminal class array
+	
+	this.$element = $("<li class='section'></li>");
+	this.$info = $("<div class='info'></div>").appendTo(this.$element);
+		this.$name = $("<div class='name info-stat'>"+this.name+"</div>").appendTo(this.$info);
+		this.$status = $("<div class='status info-stat'></div>").appendTo(this.$info);
+		this.$timebar = $("<div class='timebar'></div>").appendTo(this.$info);
+			this.$bar = $("<div class='bar'></div>").appendTo(this.$timebar);
 	this.$units = $("<div class='units'></div>").appendTo(this.$element);
-	this.$terminals = $("<div class='terminals'></div>").appendTo(this.$units);
+		this.$terminals = $("<div class='terminals'></div>").appendTo(this.$units);
 	
-	this.terminals = [];
+	//gets called every second?
+	this.tick = function(delta) {
+		var currentCompletionTime = TimeAmount; //TimeAmount + (this.getNumTerminalsFree()*5000);
+		
+		for(var i = 0; i < this.terminals.length; i++) {
+			currentCompletionTime += 10 * 1000;
+			
+			if(this.terminals[i].unit != null){
+				currentCompletionTime -= this.terminals[i].unit.rank <= 2 ? this.terminals[i].unit.rank+1 * 1000 : (this.terminals[i].unit.rank-1) * 5000;
+			}
+		}
+		
+		currentCompletionTime = Math.max(currentCompletionTime, 5000);
+		
+		this.progress += delta / currentCompletionTime;
+		
+		if(currentCompletionTime != this.completionTime)
+		{
+			this.completionTime = currentCompletionTime;
+			this.$status.text(Math.floor(this.completionTime / 1000) + "s");
+			this.$timebar.transition({"background-size": (100000/this.completionTime)+"% 100%"});
+		}
+		
+		//console.log(this.progress);
+		
+		this.$bar.transition({width: Math.min(this.progress * 100, 100) + "%"}, 'fast');
+		
+		if(this.progress >= 1)
+		{
+			this.progress = 0;
+			
+			this.$bar.transition({"background-color": 'green'}).transition({'background-color': 'yellow', 'width': '0%'}, 'fast');
+			
+			this.completeTimer();
+			//do resource additions
+		}
+	}
 	
-	/*
-	this.reposition = function(){
-		this.$element.css("transform", "translate(" + (((this.index+1) * 20) + (this.index*sectionWidth)) + "px, 0px)");
-	};*/
+	this.addTerminal = function(data) {
+		data.id = data.id || createUUID();
+		this.terminals.push(new Terminal(this, data));
+	}
 	
-	this.addTerminal = function(){
-		this.terminals.push(new Terminal(this));
+	for(var i = 0; i < data.terminals.length; i++) {
+		this.addTerminal(data.terminals[i]);
 	}
 	
 	this.terminalFree = function() {
@@ -33,35 +78,90 @@ function Section (version, faction, index){
 	
 	this.getFreeTerminal = function() {
 		for(var i = 0; i < this.terminals.length; i++){
-			if(this.terminals[i].unit == null) return this.terminals[i];
+			if(this.terminals[i].unitId == "") return this.terminals[i];
 		}
 		
 		return null;
 	}
 	
-	for(var i = 0; i < Math.random() * 6; i++)
-	{
-		this.addTerminal();
+	this.getNumTerminalsFree = function() {
+		var result = 0;
+		for(var i = 0; i < this.terminals.length; i++){
+			if(this.terminals[i].unitId == "") result++;
+		}
+		return result;
+	}
+	
+	this.getNumTerminalsFull = function() {
+		var result = 0;
+		for(var i = 0; i < this.terminals.length; i++){
+			if(this.terminals[i].unitId != "") result++;
+		}
+		return result;
+	}
+	
+	this.completeTimer = function() {
+		for(var i = 0; i < this.resources.length; i++){
+			addResource(this.resources[i]);
+		}
+	}
+	
+	this.getSaveData = function() {
+		var result = {
+			name: this.name,
+			description: this.description,
+			cost: this.cost,
+			resources: this.resources,
+			terminals: []
+		};
+		
+		for(var i = 0; i < this.terminals.length; i++) {
+			result.terminals.push(this.terminals[i].getSaveData());
+		}
+		
+		return result;
 	}
 };
 
-function Terminal (section) {
+function Terminal (section, data) {
+	this.id = data.id;
 	this.section = section;
+	this.faction = Factions[data.faction];
+	this.unitId = data.unitId; //unit id
 	this.unit = null;
 	
-	this.$element = $("<div class='terminal'></div>").appendTo(section.$terminals);
+	this.$element = $("<div class='terminal " + this.faction.name + "'></div>").appendTo(section.$terminals);
+	
+	this.setUnitId = function(unitId){
+		this.unitId = unitId;
+		console.log("Setting the unit id but not the unit.");
+	}
 	
 	this.setUnit = function(unit){
+		if(typeof unit == "string"){
+			console.log("Unit must be of type Unit, not string.");
+		}
+		
+		this.unitId = unit.id;
 		this.unit = unit;
 	}
 	
 	this.removeUnit = function() {
+		this.unitId = "";
 		this.unit = null;
+	}
+	
+	this.getSaveData = function() {
+		return {
+			faction: this.faction,
+			unit: this.unit.id
+		};
 	}
 }
 
-function addSection(faction) {
-	var section = new Section(1, faction, sections.length);
+function addSection(data) {
+	data.id = createUUID();
+	var section = new Section(data);
 	//section.reposition();
 	//section.$element.appendTo("#section-container");
 	$("#station").sly('add', section.$element);

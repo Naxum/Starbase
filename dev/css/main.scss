@@ -66,7 +66,8 @@ body {
 		repeat:repeat;
 		position:0 0;
 	}
-	animation: warp 5s linear infinite;
+	transform:translateZ(0);
+	//animation: warp 5s linear infinite;
 	position:fixed;
 	width:100%;
 	height:100%;
@@ -235,6 +236,50 @@ body {
 		}
 	}
 	
+	.info {
+		box-sizing: border-box;
+		padding: 8px;
+		background: #666;
+		color: white;
+		display: flex;
+		position: relative;
+		
+		.info-stat {
+			display:inline-block;
+			display: inline-block;
+			z-index: 1;
+		}
+		
+		.name {
+			flex: 1;
+		}
+		
+		.timebar {
+			position: absolute;
+			top: 30px;
+			left: 0px;
+			width: 100%;
+			height: 4px;
+			z-index: 0;
+			background: {
+				color: transparent;
+				image: url('../images/timebar-upscaled.png');
+				position: right;
+				repeat: repeat;
+				size: 100% 100%;
+			}
+			
+			.bar {
+				position:absolute;
+				top: 0;
+				left:0;
+				height:100%;
+				width:0%;
+				background: yellow;
+			}
+		}
+	}
+	
 	.units {
 		position: absolute;
 		bottom: 0px;
@@ -267,8 +312,8 @@ body {
 				display:inline-block;
 				bottom:0px;
 				transition:all .15s;
-				//pointer-events:all;
-				border-bottom:4px solid black;
+				//position:relative;
+				//border-bottom:4px solid black;
 				
 				@include faction-colors();
 			}
@@ -276,13 +321,12 @@ body {
 	}
 	
 	&.active .terminal:hover {
-		background:green;
-		cursor:pointer;
+		//background:green;
+		//cursor:pointer;
 	}
 	
 	&.active .terminal:active {
-		border-bottom:0px;
-		// transform:translateY(4px);
+		//border-bottom:0px;
 	}
 }
 
@@ -359,6 +403,14 @@ footer {
 	}
 }
 
+.floater {
+	position:absolute;
+	transition:all .5s;
+	opacity: 0;
+	padding:5px 7px;
+	border-radius:5px;
+}
+
 /*
 //Ignoring planet stuff for now
 $ground-height: 40%;//250px
@@ -407,13 +459,6 @@ $ground-height: 40%;//250px
 			}
 		}
 	}
-}
-
-//Ignoring atmosphere stuff now
-#atmosphere {
-	width:100%;
-	height:100%;
-	display:none;
 }
 */
 

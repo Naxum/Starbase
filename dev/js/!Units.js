@@ -7,6 +7,7 @@ var lastNames = ["Doe", "Smith", "Sparks", "Sawyer", "Pfost", "LaTourette", "Kin
 
 function createNewUnit(faction, rank, attack, health){
 	var data = {
+		id: createUUID(),
 		faction: faction,
 		rank: rank,
 		maxHealth: health,
@@ -31,6 +32,7 @@ function Unit (data) {
 	this.currentPosition = 0;
 	
 	//data variables
+	this.id = data.id;
 	this.faction = data.faction;
 	this.rank = data.rank;
 	this.maxHealth = data.maxHealth;
@@ -68,7 +70,7 @@ function Unit (data) {
 	
 	//html elements
 	//add ability to blink/smile? later
-	this.$element = $("<div class='unit'></div>"); //whole node object
+	this.$element = $("<div class='unit' title='"+this.firstName+" "+this.lastName+"'></div>"); //whole node object
 	this.$transform = $("<div class='transform'></div>").appendTo(this.$element); //for changing direction
 	this.$uniform = $("<div class='uniform'></div>").appendTo(this.$transform); //colored, animates
 	this.$skin = $("<div class='skin'></div>").appendTo(this.$transform); //skin color (hue-rotatable)

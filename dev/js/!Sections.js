@@ -33,7 +33,7 @@ function Section (data){
 			currentCompletionTime += 10 * 1000;
 			
 			if(this.terminals[i].unit != null){
-				currentCompletionTime -= this.terminals[i].unit.rank <= 2 ? this.terminals[i].unit.rank+1 * 1000 : (this.terminals[i].unit.rank-1) * 5000;
+				currentCompletionTime -= this.terminals[i].unit.rank <= 2 ? this.terminals[i].unit.rank+1 * 2000 : (this.terminals[i].unit.rank-1) * 5000;
 			}
 		}
 		
@@ -45,12 +45,12 @@ function Section (data){
 		{
 			this.completionTime = currentCompletionTime;
 			this.$status.text(Math.floor(this.completionTime / 1000) + "s");
-			this.$timebar.transition({"background-size": (100000/this.completionTime)+"% 100%"});
+			this.$timebar.transition({"background-size": (100000/this.completionTime)+"% 100%", queue:false});
 		}
 		
 		//console.log(this.progress);
 		
-		this.$bar.transition({width: Math.min(this.progress * 100, 100) + "%"}, 'fast');
+		this.$bar.transition({width: Math.min(this.progress * 100, 100) + "%", queue:false}, 'fast');
 		
 		if(this.progress >= 1)
 		{
@@ -102,6 +102,7 @@ function Section (data){
 	
 	this.completeTimer = function() {
 		for(var i = 0; i < this.resources.length; i++){
+			spawnFloater("+"+this.resources[i].amount + " "+this.resources[i].name, this.$units);
 			addResource(this.resources[i]);
 		}
 	}

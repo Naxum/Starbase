@@ -44,7 +44,7 @@ $(function(){
 		if(event.keyCode == 85) { //u
 			//testing interaction of units
 			var unit = createNewUnit(randomFaction(), Math.floor(Math.random()*5), 1, 3);
-			unit.moveTo(sections[0]);
+			unit.moveTo(sections[$(".section.active").index()]);
 			
 			unit.$element.on('click touchend', function(){
 				//unit.moveTo(sections[Math.floor(Math.random()*sections.length)]);

@@ -49,6 +49,13 @@ function createUUID() {
 	});
 }
 
+function spawnFloater(text, parent) {
+	var floater = $("<div class='floater'>"+text+"</div>").appendTo(parent);
+	floater.transition({x: Math.random()*(parent.width()-floater.width()), y: Math.random()*100-50}, 0).transition({opacity:1}).transition({y: -350, opacity: 0}, Math.random() * 2000 + 4000, function() {
+		floater.remove();
+	});
+}
+
 //enumerators
 function Enumerator (index, name) {
 	this.index = index;

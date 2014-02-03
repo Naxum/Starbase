@@ -14,13 +14,15 @@ function addResource(resourceObj){
 	}
 	
 	Resources[index].amount += resourceObj.amount;
-	Resources[index].$element.text(Resources[index].amount);
+	Resources[index].$element.text(Resources[index].amount + " +" + resourceObj.amount);
 	
 	if(!Resources[index].animating) {
 		Resources[index].animating = true;
 		
-		Resources[index].$element.transition({"background-color":"green", "scale": 1.2}).transition({"background-color":"white", "scale": 1}, function(){
+		Resources[index].$element.addClass(Resources[index].name + " animate").transition({"scale": 1.2}).transition({"scale": 1}, function(){
 			Resources[index].animating = false;
+			Resources[index].$element.removeClass(Resources[index].name + " animate");
+			Resources[index].$element.text(Resources[index].amount);
 		});
 	}
 }

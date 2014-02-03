@@ -3,16 +3,13 @@
 var units = [];
 var maleNames = ["Jack", "John", "Luke", "William", "Will", "Jake", "Andy", "Andreas", "Paul", "Colby", "Scott", "Sam", "Samuel", "Jay", "James", "Jake", "Jacob"];
 var femaleNames = ["Jill", "Jane", "Jennifer", "Jen", "Brianna", "Dayna", "Sarah", "Katrina", "Amanda", "Hannah", "Tina", "Meghan", "Bonny", "Abby", "Sam", "Samantha"];
-var lastNames = ["Doe", "Smith", "Sparks", "Sawyer", "Pfost", "LaTourette", "Kinchla", "Handy", "Curry", "Pilgrim", "Picard", "Riker", "Gove", "Gough", "Gatsby", "Gatz"];
+var lastNames = ["Doe", "Smith", "Sparks", "Sawyer", "Pfost", "LaTourette", "Kinchla", "Handy", "Curry", "Pilgrim", "Picard", "Riker", "Gough", "Gatsby", "Gatz"];
 
-function createNewUnit(faction, rank, attack, health){
+function createNewUnit(faction, rank){
 	var data = {
 		id: createUUID(),
 		faction: faction,
-		rank: rank,
-		maxHealth: health,
-		health: health,
-		attack: attack
+		rank: rank
 	};
 	
 	var unit = new Unit(data);
@@ -35,9 +32,6 @@ function Unit (data) {
 	this.id = data.id;
 	this.faction = data.faction;
 	this.rank = data.rank;
-	this.maxHealth = data.maxHealth;
-	this.health = data.health;
-	this.attack = data.attack;
 
 	if(data.hasOwnProperty('sex'))
 		this.sex = data.sex;

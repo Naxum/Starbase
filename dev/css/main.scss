@@ -22,16 +22,24 @@ $door-width: 55px;
 		background:red;
 	}
 	
-	&.operations {
+	&.operations, &.power {
 		background:orange;
 	}
 	
 	&.science {
-		background:aqua;
+		background:#006aff;
 	}
 	
 	&.civilian {
 		background:grey;
+	}
+	
+	&.money {
+		background:green;
+	}
+	
+	&.crystals {
+		background:teal;
 	}
 }
 
@@ -44,6 +52,10 @@ body {
     height: 100%;
     overflow: auto;
     background:linear-gradient(to top, black + #444, black);
+    font-family: 'helvetica neue', helvetica, arial;
+    font-weight: 200;
+    //text-rendering: geometricPrecision;
+    text-rendering: optimizeLegibility;
 }
 
 #broken {
@@ -101,9 +113,9 @@ body {
 	
 	#stats {
 		width:calc(100% - 20px);
-		padding:20px;
+		padding:5px;
 		position:relative;
-		margin:10px 20px;
+		margin:5px 10px;
 		box-sizing:border-box;
 		text-align: center;
 		
@@ -121,15 +133,38 @@ body {
 		.stat {
 			position:relative;
 			display:inline-block;
+			min-width: 150px;
+			max-width: 350px;
 			padding:7px 10px;
 			background:white;
+			font-weight: 400;
+			text-shadow: 0px 1px 0px white;
+			@include faction-colors();
+			
+			&#money:before {	content: '$'; color:green }
+			&#crystals:before { content: 'C'; color:teal }
+			&#command:before { content: 'Cmd '; color:red }
+			&#power:before { content: 'Pwr '; color:orange }
+			&#science:before { content: 'Sci '; color:#006aff }
+			
+			&:before {
+				font-weight:200;
+				color: grey;
+				opacity: 0.5;
+				text-shadow: 0px 1px 0px white;
+			}
+			
+			&.animate {
+				color:white;
+				text-shadow: 0px 1px 0 rgba(0,0,0,0.5);
+				
+				&:before {
+					color:white !important;
+					text-shadow: 0px 1px 0 rgba(0,0,0,0.5);
+					opacity: 1 !important;
+				}
+			}
 		}
-		
-		#money:before {	content: '$' }
-		#crystals:before { content: 'C' }
-		#command:before { content: 'Cmd '}
-		#power:before { content: 'Pwr '}
-		#science:before { content: 'Sci '}
 	}
 	
 	#interface {
@@ -179,6 +214,8 @@ body {
 					//position: relative;
 					//bottom: 0;
 					
+					@include faction-colors();
+					
 					&:active {
 						border-bottom:0;
 					}
@@ -189,10 +226,20 @@ body {
 				transform-origin:center;
 				text-transform: uppercase;
 				transform:rotate(-90deg);
+				position: absolute;
+				width: 200px;
+				top: 50%;
+				left: -150%;
 			}
 			
 			.content.opened {
 				width:$interface-width;
+				display: block;
+				
+				.title {
+					padding:10px;
+					font-size: large;
+				}
 			}
 			
 			&.open {
@@ -268,7 +315,17 @@ body {
 		}
 		
 		.name {
+			font-weight: 400;
+		}
+		
+		.level {
+			margin-left: 8px;
+			color: white - #444;
+		}
+		
+		.status {
 			flex: 1;
+			text-align: right;
 		}
 		
 		.timebar {
@@ -333,6 +390,17 @@ body {
 				//border-bottom:4px solid black;
 				
 				@include faction-colors();
+				
+				&.empty {
+					opacity: 0.35;
+					height: 20%;
+					
+					&:hover, &.selected {
+						height:100%;
+						opacity: 0.5;
+						cursor: pointer;
+					}
+				}
 			}
 		}
 	}
@@ -424,10 +492,14 @@ footer {
 	position:absolute;
 	transition:all .5s;
 	opacity: 0;
+	color:white;
+	text-shadow:0 1px 0 rgba(0,0,0,0.5);
 	padding:5px 7px;
 	border-radius:5px;
 	z-index: 1000;
 	background:white;
+	
+	@include faction-colors();
 }
 
 .full-width {

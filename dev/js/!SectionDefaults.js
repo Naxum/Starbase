@@ -48,6 +48,29 @@ var SectionDefaults = {
 			"terminals" : [
 				{ "faction": 0, "unitId": "" }
 			]
+		},
+		{
+			"name": "Operations Office",
+			"description": "Get everyone in here!",
+			"cost": [
+				{ "name": "money", "amount": 50 }
+			],
+			"resources" : [
+				{ "name": "money", "amount": 25 },
+				{ "name": "power", "amount": 10 },
+				{ "name": "command", "amount": 20 },
+				{ "name": "crystals", "amount": 1 },
+				{ "name": "science", "amount": 15 }
+			],
+			"terminals" : [
+				{ "faction": 0, "unitId": "" },
+				{ "faction": 1, "unitId": "" },
+				{ "faction": 1, "unitId": "" },
+				{ "faction": 2, "unitId": "" },
+				{ "faction": 2, "unitId": "" },
+				{ "faction": 3, "unitId": "" },
+				{ "faction": 3, "unitId": "" }
+			]
 		}
 	]
 };

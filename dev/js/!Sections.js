@@ -19,6 +19,7 @@ function Section (data){
 	this.$element = $("<li class='section'></li>");
 	this.$info = $("<div class='info'></div>").appendTo(this.$element);
 		this.$name = $("<div class='name info-stat'>"+this.name+"</div>").appendTo(this.$info);
+		this.$level = $("<div class='level info-stat'>Level 1</div>").appendTo(this.$info);
 		this.$status = $("<div class='status info-stat'></div>").appendTo(this.$info);
 		this.$timebar = $("<div class='timebar'></div>").appendTo(this.$info);
 			this.$bar = $("<div class='bar'></div>").appendTo(this.$timebar);
@@ -30,7 +31,7 @@ function Section (data){
 		var currentCompletionTime = TimeAmount; //TimeAmount + (this.getNumTerminalsFree()*5000);
 		
 		for(var i = 0; i < this.terminals.length; i++) {
-			currentCompletionTime += 10 * 1000;
+			currentCompletionTime += TerminalTimeMultiplier;
 			
 			if(this.terminals[i].unit != null){
 				currentCompletionTime -= this.terminals[i].unit.rank <= 2 ? this.terminals[i].unit.rank+1 * 2000 : (this.terminals[i].unit.rank-1) * 5000;
@@ -102,7 +103,8 @@ function Section (data){
 	
 	this.completeTimer = function() {
 		for(var i = 0; i < this.resources.length; i++){
-			spawnFloater("+"+this.resources[i].amount + " "+this.resources[i].name, this.$units);
+			//spawnFloater("+"+this.resources[i].amount + " "+this.resources[i].name, this.$units);
+			spawnFloater("+"+this.resources[i].amount, this.$units, this.resources[i].name);
 			addResource(this.resources[i]);
 		}
 	}
@@ -131,7 +133,7 @@ function Terminal (section, data) {
 	this.unitId = data.unitId; //unit id
 	this.unit = null;
 	
-	this.$element = $("<div class='terminal " + this.faction.name + "'></div>").appendTo(section.$terminals);
+	this.$element = $("<div class='terminal empty " + this.faction.name + "'></div>").appendTo(section.$terminals);
 	
 	this.setUnitId = function(unitId){
 		this.unitId = unitId;
@@ -145,11 +147,13 @@ function Terminal (section, data) {
 		
 		this.unitId = unit.id;
 		this.unit = unit;
+		this.$element.removeClass('empty');
 	}
 	
 	this.removeUnit = function() {
 		this.unitId = "";
 		this.unit = null;
+		this.$element.addClass('empty');
 	}
 	
 	this.getSaveData = function() {

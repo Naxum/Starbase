@@ -8,6 +8,7 @@ var power = 0;
 var command = 0;
 
 var TimeAmount = 10 * 1000; //ten seconds
+var TerminalTimeMultiplier = 10 * 1000;
 var lastTimestamp = 0;
 
 //main function stuffs
@@ -43,7 +44,7 @@ $(function(){
 		
 		if(event.keyCode == 85) { //u
 			//testing interaction of units
-			var unit = createNewUnit(randomFaction(), Math.floor(Math.random()*5), 1, 3);
+			var unit = createNewUnit(randomFaction(), Math.floor(Math.random()*5));
 			unit.moveTo(sections[$(".section.active").index()]);
 			
 			unit.$element.on('click touchend', function(){
@@ -57,6 +58,23 @@ $(function(){
 				//unit.$element.appendTo(sections[0].$terminals.find(".terminal")[0]);
 			});
 		}
+	});
+	
+	$(".person").on('click touchend', function(event){
+		var unit = createNewUnit(Factions[$(this).index()], 0);
+		unit.moveTo(sections[$(".section.active").index()]);
+		
+		unit.$element.on('click touchend', function(){
+			unit.useTerminal(unit.currentSection.getFreeTerminal());
+		});
+	});
+	
+	$(".terminal").on('click touchend', function(event){
+		if(!$(this).hasClass("empty")) return;
+		
+		var unit = createNewUnit(getFaction($(this)[0].className.split(" ")), 0);
+		unit.moveTo(sections[$(".section.active").index()]);
+		unit.useTerminal(unit.currentSection.terminals[$(this).index()]);
 	});
 	
 	$("#station").transition({opacity:1, delay: 500}, 500);

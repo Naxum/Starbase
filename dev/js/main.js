@@ -7,7 +7,7 @@ var science = 0;
 var power = 0;
 var command = 0;
 
-var TimeAmount = 10 * 1000; //ten seconds
+var TimeAmount = 2 * 1000; //ten seconds
 var TerminalTimeMultiplier = 10 * 1000;
 var lastTimestamp = 0;
 
@@ -72,7 +72,7 @@ $(function(){
 	$(".terminal").on('click touchend', function(event){
 		if(!$(this).hasClass("empty")) return;
 		
-		var unit = createNewUnit(getFaction($(this)[0].className.split(" ")), 0);
+		var unit = createNewUnit(getFaction($(this)[0].className.split(" ")), 4);
 		unit.moveTo(sections[$(".section.active").index()]);
 		unit.useTerminal(unit.currentSection.terminals[$(this).index()]);
 	});

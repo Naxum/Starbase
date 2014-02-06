@@ -18,7 +18,7 @@ function Section (data){
 	
 	this.$element = $("<li class='section'></li>");
 	this.$info = $("<div class='info'></div>").appendTo(this.$element);
-		this.$name = $("<div class='name info-stat'>"+this.name+"</div>").appendTo(this.$info);
+		this.$name = $("<div class='name info-stat' contenteditable spellcheck='false'>"+this.name+"</div>").appendTo(this.$info);
 		this.$level = $("<div class='level info-stat'>Level 1</div>").appendTo(this.$info);
 		this.$status = $("<div class='status info-stat'></div>").appendTo(this.$info);
 		this.$timebar = $("<div class='timebar'></div>").appendTo(this.$info);
@@ -34,7 +34,7 @@ function Section (data){
 			currentCompletionTime += TerminalTimeMultiplier;
 			
 			if(this.terminals[i].unit != null){
-				currentCompletionTime -= this.terminals[i].unit.rank <= 2 ? this.terminals[i].unit.rank+1 * 2000 : (this.terminals[i].unit.rank-1) * 5000;
+				currentCompletionTime -= this.terminals[i].unit.rank <= 2 ? (this.terminals[i].unit.rank+1) * 2000 : (this.terminals[i].unit.rank-1) * 5000;
 			}
 		}
 		
@@ -45,7 +45,7 @@ function Section (data){
 		if(currentCompletionTime != this.completionTime)
 		{
 			this.completionTime = currentCompletionTime;
-			this.$status.text(Math.floor(this.completionTime / 1000) + "s");
+			this.$status.text(Math.floor(this.completionTime / 1000));
 			this.$timebar.transition({"background-size": (100000/this.completionTime)+"% 100%", queue:false});
 		}
 		

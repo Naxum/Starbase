@@ -7,9 +7,11 @@ var science = 0;
 var power = 0;
 var command = 0;
 
-var TimeAmount = 2 * 1000; //ten seconds
+var TimeAmount = 10 * 1000; //ten seconds
 var TerminalTimeMultiplier = 10 * 1000;
 var lastTimestamp = 0;
+
+var editing = false;
 
 //main function stuffs
 $(function(){
@@ -32,6 +34,11 @@ $(function(){
 	
 	$(window).keyup(function(event){
 		//console.log(event.keyCode);
+		
+		if(editing) {
+			//check for enter completion
+			return;
+		}
 		
 		if(event.keyCode == 65 || event.keyCode == 37) {
 			//move left
@@ -60,6 +67,25 @@ $(function(){
 		}
 	});
 	
+	$(".section .name").on('touchend click', function(){
+		if(editing) return;
+		
+		editing = true;
+		
+		$(this).on('keypress', function(event){
+			if(event.keyCode == 13){
+				editing = false;
+				$(this).blur();
+				
+				event.preventDefault();
+				return false;
+			} else if($(this).text().length > 30) {
+				event.preventDefault();
+				return false;
+			}
+		});
+	});
+	
 	$(".person").on('click touchend', function(event){
 		var unit = createNewUnit(Factions[$(this).index()], 0);
 		unit.moveTo(sections[$(".section.active").index()]);
@@ -70,11 +96,17 @@ $(function(){
 	});
 	
 	$(".terminal").on('click touchend', function(event){
+		if($(this).parent(".section"))
 		if(!$(this).hasClass("empty")) return;
 		
-		var unit = createNewUnit(getFaction($(this)[0].className.split(" ")), 4);
+		var unit = createNewUnit(getFaction($(this)[0].className.split(" ")), 0);
 		unit.moveTo(sections[$(".section.active").index()]);
 		unit.useTerminal(unit.currentSection.terminals[$(this).index()]);
+		
+		//temp add rank to unit
+		unit.$element.on('touchend click', function(event){
+			unit.setRank(Math.min(unit.rank + 1, 4));
+		});
 	});
 	
 	$("#station").transition({opacity:1, delay: 500}, 500);

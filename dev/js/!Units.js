@@ -33,25 +33,30 @@ function Unit (data) {
 	this.faction = data.faction;
 	this.rank = data.rank;
 
-	if(data.hasOwnProperty('sex'))
-		this.sex = data.sex;
-	else 
-		this.sex = Math.random() < 0.5 ? 'Male' : 'Female';
+	this.construct = function(data) {
+		if(data.hasOwnProperty('sex'))
+			this.sex = data.sex;
+		else 
+			this.sex = Math.random() < 0.5 ? 'Male' : 'Female';
 
-	if(data.hasOwnProperty('firstName') && data.hasOwnProperty('lastName')) {
-		this.firstName = data.firstName;
-		this.lastName = data.lastName;
-	} else {
-		//name generation
-		if(this.sex == 'Male') {
-			this.firstName = maleNames[Math.floor(Math.random() * maleNames.length)];
-		} else if(this.sex == 'Female')	{
-			this.firstName = femaleNames[Math.floor(Math.random() * femaleNames.length)];
-		} else { //maybe aliums have different sexies
-			console.log("Unknown unit sex, unsupported naming convention: " + this.sex);
+		if(data.hasOwnProperty('firstName') && data.hasOwnProperty('lastName')) {
+			this.firstName = data.firstName;
+			this.lastName = data.lastName;
+		} else {
+			//name generation
+			if(this.sex == 'Male') {
+				this.firstName = maleNames[Math.floor(Math.random() * maleNames.length)];
+			} else if(this.sex == 'Female')	{
+				this.firstName = femaleNames[Math.floor(Math.random() * femaleNames.length)];
+			} else { //maybe aliums have different sexies
+				console.log("Unknown unit sex, unsupported naming convention: " + this.sex);
+			}
+			
+			this.lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
 		}
 		
-		this.lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+		this.setRank(data.rank);
+		this.refreshName();
 	}
 	
 	if(data.hasOwnProperty('currentSection'))
@@ -64,7 +69,7 @@ function Unit (data) {
 	
 	//html elements
 	//add ability to blink/smile? later
-	this.$element = $("<div class='unit' title='"+this.firstName+" "+this.lastName+"'></div>"); //whole node object
+	this.$element = $("<div class='unit'></div>"); //whole node object
 	this.$transform = $("<div class='transform'></div>").appendTo(this.$element); //for changing direction
 	this.$uniform = $("<div class='uniform'></div>").appendTo(this.$transform); //colored, animates
 	this.$skin = $("<div class='skin'></div>").appendTo(this.$transform); //skin color (hue-rotatable)
@@ -75,11 +80,6 @@ function Unit (data) {
 		background: 'url("images/'+this.faction.name+'-uniform-upscaled.png")'
 	});
 	
-	if(this.faction != CivilianFaction && this.rank > 0) {
-		this.$badge.css({
-			background: 'url("images/rank-'+this.rank+'-upscaled.png")'
-		});
-	}
 	//check for variation type stuffs later
 	this.$skin.css({
 		background: 'url("images/skin-upscaled.png")'
@@ -89,6 +89,10 @@ function Unit (data) {
 	this.actions = [];
 	
 	//don't forget about needs, wants, friends, orders, morale, etc
+	
+	this.refreshName = function(){
+		this.$element.attr('title', this.firstName+' '+this.lastName);
+	}
 	
 	this.useTerminal = function(terminal){
 		this.leaveTerminal();
@@ -117,6 +121,22 @@ function Unit (data) {
 			//movment complete
 		});
 	};
+	
+	this.setRank = function(rank) {
+		if(Math.min(rank, 4) > this.rank) {
+			spawnFloater("Level up!", this.$element, this.faction.name);
+		}
+		
+		this.rank = rank;
+		if(/*this.faction != CivilianFaction && */this.rank > 0) {
+			this.$badge.css({
+				background: 'url("images/rank-'+this.rank+'-upscaled.png")',
+				display: 'block'
+			});
+		} else {
+			this.$badge.css({ display: 'none'});
+		}
+	}
 	
 	this.setFlipped = function(bool, time){
 		this.$transform.css({scale: [bool ? -1 : 1, 1]});
@@ -170,4 +190,6 @@ function Unit (data) {
 		this.actions.splice(0, 1);
 		this.doNextAction();
 	}
+	
+	this.construct(data);
 }

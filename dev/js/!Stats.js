@@ -26,3 +26,11 @@ function addResource(resourceObj){
 		});
 	}
 }
+
+function getResource(resourceName) {
+	for(var i = 0; i < Resources.length; i++){
+		if(Resources[i].name == resourceName) return Resources[i];
+	}
+	console.log("Could not find resource with inputted name!", resourceName);
+	return null;
+}

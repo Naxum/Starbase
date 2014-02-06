@@ -175,6 +175,7 @@ body {
 		margin-bottom:5px;
 		height:$interface-height + 2;
 		overflow:hidden;
+		display:none;
 		
 		#portrait {
 			width: $interface-height;
@@ -312,6 +313,7 @@ body {
 			display:inline-block;
 			display: inline-block;
 			z-index: 1;
+			//text-shadow:0 1px 0 rgba(0,0,0,0.5);
 		}
 		
 		.name {
@@ -326,6 +328,11 @@ body {
 		.status {
 			flex: 1;
 			text-align: right;
+			
+			&:after {
+				content: 's';
+				color: white - #444;
+			}
 		}
 		
 		.timebar {
@@ -359,6 +366,7 @@ body {
 		bottom: 0px;
 		height: $section-height/2;
 		padding:0 10px;
+		user-select:none;
 		
 		//not sure if needed
 		width:100%;
@@ -493,11 +501,15 @@ footer {
 	transition:all .5s;
 	opacity: 0;
 	color:white;
+	text-align:center;
 	text-shadow:0 1px 0 rgba(0,0,0,0.5);
 	padding:5px 7px;
+	min-width:70px;
 	border-radius:5px;
 	z-index: 1000;
-	background:white;
+	background:grey;
+	font-weight:200;
+	pointer-events:none;
 	
 	@include faction-colors();
 }

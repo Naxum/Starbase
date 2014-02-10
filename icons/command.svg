@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 17.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 960 560" enable-background="new 0 0 960 560" xml:space="preserve">
+<g id="Layer_1">
+	<circle display="none" fill="#006AFF" cx="397.3" cy="315" r="11.3"/>
+	<polygon display="none" fill="#C1272D" points="360.6,326 373.6,303.4 386.7,326 	"/>
+	<rect x="411" y="304" display="none" fill="#FBB03B" width="23" height="22"/>
+	<path display="none" d="M411,334v23h23v-23H411z M426,349h-7v-7h7V349z"/>
+	<circle display="none" fill="#0659FF" cx="534.2" cy="444.9" r="35.8"/>
+	<polygon points="373.5,349.9 386.5,355.9 373.5,333.4 360.6,355.9 	"/>
+	<text transform="matrix(1 0 0 1 438.3333 373.5)" display="none" font-family="'HelveticaNeue-Thin'" font-size="16">Test font</text>
+	<text transform="matrix(1 0 0 1 438.3333 398.8333)" display="none" font-family="'HelveticaNeue-Light'" font-size="16">Test font</text>
+	<text transform="matrix(1 0 0 1 438.3333 351.8333)" display="none" font-family="'HelveticaNeue-UltraLight'" font-size="16">Test font</text>
+</g>
+<g id="Layer_2">
+	<g display="none">
+		<rect x="522" y="408" display="inline" fill="#0659FF" width="25" height="73"/>
+		
+			<rect x="522.4" y="408" transform="matrix(0.4991 0.8665 -0.8665 0.4991 653.1014 -240.5212)" display="inline" fill="#0659FF" width="24.5" height="73.4"/>
+		
+			<rect x="522.4" y="408" transform="matrix(-0.4991 0.8665 -0.8665 -0.4991 1186.7426 203.3483)" display="inline" fill="#0659FF" width="24.5" height="73.4"/>
+	</g>
+	<path display="none" d="M404.4,336.3l-3.4,1.9v-3.8c-1-0.5-2.6-0.7-4.1-0.7c-1.4,0-1.9,0.2-3.9,0.7v3.8l-3.1-1.9
+		c-2,1.7-3.4,4-3.9,6.7l3.5,2l-3.5,2c0.5,2.7,1.7,5,3.6,6.7l3.3-2v4c2,0.4,2.6,0.7,3.9,0.7c1.4,0,3.1-0.3,4.1-0.7v-4l3.6,2
+		c2-1.7,3.4-4.1,3.9-6.8l-3.3-1.9l3.3-1.9C407.9,340.3,406.4,337.9,404.4,336.3z"/>
+</g>
+</svg>

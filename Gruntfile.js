@@ -83,7 +83,7 @@ module.exports = function(grunt){
 				}
 			},
 			html: {
-				files: ['dev/**/*.html'],
+				files: ['dev/**/*.html', 'dev/fonts/*'],
 				tasks: ['copy'],
 				options: {
 					spawn: false
@@ -110,7 +110,7 @@ module.exports = function(grunt){
 			target: {
 				expand: true,
 				cwd: 'dev/',
-				src:  ['**/*.html'],
+				src:  ['**/*.html', 'fonts/*'],
 				dest: 'build/'
 			}
 		},

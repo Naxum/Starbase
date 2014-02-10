@@ -1,0 +1,40 @@
+@font-face {
+	font-family: 'starbase';
+	src:url('../fonts/starbase.eot?i50vfi');
+	src:url('../fonts/starbase.eot?#iefixi50vfi') format('embedded-opentype'),
+		url('../fonts/starbase.woff?i50vfi') format('woff'),
+		url('../fonts/starbase.ttf?i50vfi') format('truetype'),
+		url('../fonts/starbase.svg?i50vfi#starbase') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+	font-family: 'starbase';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+[class^="icon-"]:before, [class*=" icon-"]:before {
+	font-size:small;
+}
+
+.icon-power:before {
+	content: "\6f";
+	padding-right:2px;
+}
+.icon-science:before {
+	content: "\73";
+	padding-right:1px;
+}
+.icon-command:before {
+	content: "\63";
+}

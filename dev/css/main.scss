@@ -7,6 +7,8 @@ $section-width: $scale * $height * 5px;
 
 $door-width: 55px;
 
+//@import 'fonts';
+
 @mixin pixel-render() {
 	image-rendering:optimizeSpeed;             /* Legal fallback */
 	image-rendering:-moz-crisp-edges;          /* Firefox        */
@@ -143,9 +145,9 @@ body {
 			
 			&#money:before {	content: '$'; color:green }
 			&#crystals:before { content: 'C'; color:teal }
-			&#command:before { content: 'Cmd '; color:red }
-			&#power:before { content: 'Pwr '; color:orange }
-			&#science:before { content: 'Sci '; color:#006aff }
+			&#command:before { color:red }
+			&#power:before { color:orange }
+			&#science:before { color:#006aff }
 			
 			&:before {
 				font-weight:200;

@@ -54,7 +54,7 @@ function spawnFloater(text, parent, optionalClass) {
 	
 	var height = parent.height();
 	
-	floater.transition({x: Math.random()*(parent.width()-floater.width()), y: (-Math.random()*height*1.5)+(height*0.25)}, 0).transition({opacity:0.8}).transition({y: "+=0px"}, 500).transition({y: "-=350px", opacity: 0}, Math.random() * 2000 + 4000, function() {
+	floater.transition({x: Math.random()*(parent.width()-floater.width()), y: (-Math.random()*height*0.5)+(height*0.25)}, 0).transition({opacity:0.8}).transition({y: "+=0px"}, 500).transition({y: "-=350px", opacity: 0}, Math.random() * 2000 + 4000, function() {
 		floater.remove();
 	});
 }

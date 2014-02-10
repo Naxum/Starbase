@@ -8,8 +8,10 @@ var power = 0;
 var command = 0;
 
 var TimeAmount = 10 * 1000; //ten seconds
-var TerminalTimeMultiplier = 10 * 1000;
+var TerminalTimeMultiplier = 0;// 10 * 1000;
 var lastTimestamp = 0;
+var TerminalResourceAmount = 5;
+var TerminalUpgradeCost = 50;
 
 var editing = false;
 
@@ -20,7 +22,7 @@ $(function(){
 	//should load existing data here
 	
 	for(var i = 0; i < 5; i++) {
-		addSection(SectionDefaults.rooms[Math.floor(Math.random() * SectionDefaults.rooms.length)]);
+		addSection();//SectionDefaults.rooms[Math.floor(Math.random() * SectionDefaults.rooms.length)]);
 		/*
 		if(i == 4) {
 			sections[4].$element.addClass("new");

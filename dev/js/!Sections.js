@@ -195,10 +195,10 @@ function Terminal (section, data) {
 	
 	this.setLevel = function(level){
 		if(level > 5) return;
-		console.log("Level up!");
+		//console.log("Level up!");
 		
 		if(level != 1)
-			spawnFloater("Level Up!", this.$element, "level-up");
+			spawnFloater("Upgraded", this.$element, "level-up");
 		
 		level = Math.min(level, 5);
 		this.$element.removeClass("level-"+this.level);

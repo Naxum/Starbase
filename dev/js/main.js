@@ -11,7 +11,7 @@ var TimeAmount = 10 * 1000; //ten seconds
 var TerminalTimeMultiplier = 0;// 10 * 1000;
 var lastTimestamp = 0;
 var TerminalResourceAmount = 5;
-var TerminalUpgradeCost = 50;
+var TerminalUpgradeCost = 100;
 
 var editing = false;
 
@@ -28,6 +28,12 @@ $(function(){
 			sections[4].$element.addClass("new");
 		}*/
 	}
+	
+	//addResource({name: "money", amount: 0});
+	addResource({name: "command", amount: 100});
+	addResource({name: "science", amount: 100});
+	addResource({name: "power", amount: 100});
+	
 	/*
 	$(".terminal").on('touchend click', function(){
 		if($(this).parents(".active").length != 0)

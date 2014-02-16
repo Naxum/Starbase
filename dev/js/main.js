@@ -12,6 +12,7 @@ var TerminalTimeMultiplier = 0;// 10 * 1000;
 var lastTimestamp = 0;
 var TerminalResourceAmount = 5;
 var TerminalUpgradeCost = 100;
+var TerminalCreateCost = 400;
 
 var editing = false;
 

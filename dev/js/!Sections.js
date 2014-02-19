@@ -10,6 +10,7 @@ function Section (data){
 	this.name = data.name; //string
 	this.progress = 0; //float-percentage to completion
 	this.completionTime = 0; //time in miliseconds
+	this.level = data.level || 1;
 	
 	this.terminals = []; //terminal class array
 	
@@ -23,6 +24,75 @@ function Section (data){
 			this.$bar = $("<div class='bar'></div>").appendTo(this.$timebar);
 	this.$units = $("<div class='units'></div>").appendTo(this.$element);
 		this.$terminals = $("<div class='terminals'></div>").appendTo(this.$units);
+			this.$newTerminal = $("<div class='terminal new'></div>").appendTo(this.$terminals);
+				this.$newCommandTerminal = $("<div class='option command icon-command'></div>").appendTo(this.$newTerminal);
+				this.$newOperationsTerminal =$("<div class='option icon-power power'></div>").appendTo(this.$newTerminal);
+				this.$newScienceTerminal = $("<div class='option icon-science science'></div>").appendTo(this.$newTerminal);
+	
+	this.$name.on('click touchup', {target:this}, function(event){
+		if(!event.data.target.$element.hasClass("active")) { 
+			//event.stopPropagation();
+			event.preventDefault();
+			return;
+		}
+		
+		var doc = document, range, selection;    
+		
+	    if (doc.body.createTextRange) { //ms
+	        range = doc.body.createTextRange();
+	        range.moveToElementText(this);
+	        range.select();
+	    } else if (window.getSelection) { //all others
+	        selection = window.getSelection();        
+	        range = doc.createRange();
+	        range.selectNodeContents(this);
+	        selection.removeAllRanges();
+	        selection.addRange(range);
+	    }
+		event.stopPropagation();
+	});
+	
+	//this.$newTerminal.on('click touchup', { target: this}, function(event){event.data.target.toggleNewTerminal()});
+	this.$newCommandTerminal.on('click touchup', {target:this, faction: 1}, function(event){event.data.target.clickNewTerminal(event)});
+	this.$newOperationsTerminal.on('click touchup', {target:this, faction: 2}, function(event){event.data.target.clickNewTerminal(event)});
+	this.$newScienceTerminal.on('click touchup', {target:this, faction: 3}, function(event){event.data.target.clickNewTerminal(event)});
+	
+	/*this.toggleNewTerminal = function(){
+		console.log("blarg");
+		this.$newTerminal.toggleClass("selected");
+		this.$newCommandTerminal.text(TerminalCreateCost+"");
+		this.$newOperationsTerminal.text(TerminalCreateCost+"");
+		this.$newScienceTerminal.text(TerminalCreateCost+"");
+	}*/
+	
+	this.$newCommandTerminal.text(TerminalCreateCost+"");
+	this.$newOperationsTerminal.text(TerminalCreateCost+"");
+	this.$newScienceTerminal.text(TerminalCreateCost+"");
+	
+	this.clickNewTerminal = function(event){
+		this.buyTerminal(event.data.faction);
+		event.stopPropagation();
+		return false;
+	}
+	
+	this.buyTerminal = function(faction){
+		//console.log("Attempting to buy terminal.");
+		
+		var resourceName = getResourceNameFromFaction(Factions[faction]);
+		if(getResource(resourceName).amount >= TerminalCreateCost){
+			addResource({
+				name: resourceName,
+				amount: -TerminalCreateCost
+			});
+			this.createTerminal(faction);
+			
+			if(this.terminals.length >= 6){
+				this.$newTerminal.hide();
+			}
+		} else {
+			//console.log("Not enough funds.");
+		}
+	}
 	
 	this.loadData = function(data){
 		this.name = data.name;
@@ -160,7 +230,7 @@ function Terminal (section, data) {
 	this.unitId = data.unitId; //unit id
 	this.unit = null;
 	
-	this.$element = $("<div class='terminal level-"+this.level+" " + this.faction.name + "'></div>").appendTo(section.$terminals);
+	this.$element = $("<div class='terminal level-"+this.level+" " + this.faction.name + "'></div>").insertBefore(section.$newTerminal);
 		this.$upgrade = $("<div class='upgrade'><div>Upgrade</div></div>").appendTo(this.$element);
 			this.$cost = $("<div class='cost icon-"+getResourceNameFromFaction(this.faction)+"'></div>").appendTo(this.$upgrade);
 		this.$rank = $("<div class='rank'></div>").appendTo(this.$element);
@@ -246,7 +316,7 @@ function Terminal (section, data) {
 function addSection() {
 	var data = {
 		id: createUUID(),
-		name: "New Room",
+		name: "New Room - Click to edit",
 		terminals: []
 	};
 	

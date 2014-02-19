@@ -19,31 +19,6 @@ $door-width: 70px;
 	image-rendering:pixelated;                 /* CSS4 Proposed  */
 	-ms-interpolation-mode:nearest-neighbor;   /* IE8+           */
 }
-@mixin faction-colors(){
-	&.command {
-		background:red;
-	}
-	
-	&.operations, &.power {
-		background:orange;
-	}
-	
-	&.science {
-		background:#006aff;
-	}
-	
-	&.civilian {
-		background:grey;
-	}
-	
-	&.money {
-		background:green;
-	}
-	
-	&.crystals {
-		background:teal;
-	}
-}
 
 html {
     overflow: hidden;
@@ -144,7 +119,6 @@ body {
 			background:white;
 			font-weight: 400;
 			text-shadow: 0px 1px 0px white;
-			@include faction-colors();
 			
 			&#money:before {	content: '$'; color:green }
 			&#crystals:before { content: 'C'; color:teal }
@@ -220,8 +194,6 @@ body {
 					//position: relative;
 					//bottom: 0;
 					
-					@include faction-colors();
-					
 					&:active {
 						border-bottom:0;
 					}
@@ -287,8 +259,6 @@ body {
 	
 	background:white;
 	margin:0 4px;
-	
-	@include faction-colors();
 	
 	&:not(.active) {
 		cursor:pointer;
@@ -399,15 +369,77 @@ body {
 			.terminal {
 				width:$door-width;
 				height:100%;
-				background:white;
+				//background:white;
 				display:inline-block;
 				bottom:0px;
 				transition:all .15s;
 				position: relative;
+				text-align: center;
+				box-sizing:border-box;
+				//padding:3px;
 				//position:relative;
 				//border-bottom:4px solid black;
 				
-				@include faction-colors();
+				&.new {
+					background:rgba(0,0,0,0.1);
+					color:black;
+					padding:40px 0;
+					
+					&::before {
+						content:'Add';
+						border:none;
+						background:transparent;
+						box-shadow:none;
+					}
+					
+					&:hover::before {
+						content: '';
+						opacity: 0;
+					}
+					
+					&:hover {
+						background:rgba(0,0,0,0.25);
+						color: white;
+						padding:0;
+					}
+					
+					.option {
+						visibility: hidden;
+						opacity:0;	
+						height:33.3333%;
+						box-sizing:border-box;
+						padding:7px;
+						position:relative;
+					}
+					
+					&:hover .option{
+						opacity: 0.2;
+						visibility: visible;
+						overflow: hidden;
+						box-shadow: 0px 0px 5px 0 rgba(0,0,0,1) inset;
+						
+						&:hover {
+							opacity:1;
+							border-bottom:2px solid rgba(0,0,0,0.5);
+							box-shadow:none;
+						}
+						
+						&:active {
+							transform:translateY(2px);
+							border-bottom:0;
+							/*
+							&::after {
+								content: ' ';
+								background:rgba(255,255,255,0.5);
+								position:absolute;
+								top: 0;
+								left: 0;
+								width:100%;
+								height:100%;
+							}*/
+						}
+					}
+				}
 				
 				&::after, &::before, .rank {
 					width:100%;
@@ -602,12 +634,34 @@ footer {
 	background:grey;
 	font-weight:200;
 	pointer-events:none;
-	
-	@include faction-colors();
 }
 
 .full-width {
 	width:100%;
+}
+
+.command {
+	background:red !important;
+}
+
+.operations, .power {
+	background:orange !important;
+}
+
+.science {
+	background:#006aff !important;
+}
+
+.civilian {
+	background:grey !important;
+}
+
+.money {
+	background:green !important;
+}
+
+.crystals {
+	background:teal !important;
 }
 
 /*

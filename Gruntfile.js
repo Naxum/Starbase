@@ -88,6 +88,11 @@ module.exports = function(grunt){
 				options: {
 					spawn: false
 				}
+			},
+			connect: {
+				files: [],
+				tasks: ['connect'],
+				options: { spawn: false }
 			}
 		},
 		sass: {
@@ -130,6 +135,17 @@ module.exports = function(grunt){
 				cwd: 'dev/images/',
 				dest: 'build/images/'
 			}
+		},
+		connect: {
+			server: {
+				options: {
+					port: 8888,
+					base: 'build',
+					open: true,
+					livereload:true,
+					//keepalive: true
+				}
+			}
 		}
 	});
 	
@@ -137,11 +153,12 @@ module.exports = function(grunt){
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-copy');
-	grunt.loadNpmTasks('grunt-contrib-imagemin');
 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-contrib-imagemin');
 	grunt.loadNpmTasks('grunt-contrib-sass');
 	grunt.loadNpmTasks('grunt-autoprefixer');
 	grunt.loadNpmTasks('grunt-responsive-images');
+	grunt.loadNpmTasks('grunt-contrib-connect');
 	
 	//could add custom tasks for concat here!
 	grunt.registerTask('default', ['watch']);

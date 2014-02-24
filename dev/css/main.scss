@@ -27,7 +27,7 @@ html {
 
 body {
     height: 100%;
-    overflow: auto;
+    overflow: hidden;
     background:linear-gradient(to top, black + #444, black);
     font-family: 'helvetica neue', helvetica, arial;
     font-weight: 200;
@@ -278,7 +278,7 @@ body {
 	
 	.info {
 		box-sizing: border-box;
-		padding: 8px;
+		padding: 5px 7px 9px;
 		background: #666;
 		color: white;
 		display: flex;
@@ -293,6 +293,11 @@ body {
 		
 		.name {
 			font-weight: 400;
+			background: transparent;
+			color: white;
+			border: none;
+			height: 20px;
+			box-sizing: border-box;
 		}
 		
 		.level {
@@ -392,12 +397,12 @@ body {
 						box-shadow:none;
 					}
 					
-					&:hover::before {
+					&.active::before {
 						content: '';
 						opacity: 0;
 					}
 					
-					&:hover {
+					&.active {
 						background:rgba(0,0,0,0.25);
 						color: white;
 						padding:0;
@@ -412,11 +417,11 @@ body {
 						position:relative;
 					}
 					
-					&:hover .option{
-						opacity: 0.2;
+					&.active .option{
+						opacity: 1;
 						visibility: visible;
 						overflow: hidden;
-						box-shadow: 0px 0px 5px 0 rgba(0,0,0,1) inset;
+						//box-shadow: 0px 0px 5px 0 rgba(0,0,0,1) inset;
 						
 						&:hover {
 							opacity:1;

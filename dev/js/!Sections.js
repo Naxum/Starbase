@@ -17,7 +17,7 @@ function Section (data){
 	this.$element = $("<li class='section'></li>");
 	this.$interface = $("<div class='interface'></div>").appendTo(this.$element);
 	this.$info = $("<div class='info'></div>").appendTo(this.$element);
-		this.$name = $("<div class='name info-stat' contenteditable spellcheck='false'>"+this.name+"</div>").appendTo(this.$info);
+		this.$name = $("<input class='name info-stat' spellcheck='false' value='' placeholder='Room Name'></input>").appendTo(this.$info);
 		//this.$level = $("<div class='level info-stat'>Level 1</div>").appendTo(this.$info);
 		this.$status = $("<div class='status info-stat'></div>").appendTo(this.$info);
 		this.$timebar = $("<div class='timebar'></div>").appendTo(this.$info);
@@ -28,8 +28,8 @@ function Section (data){
 				this.$newCommandTerminal = $("<div class='option command icon-command'></div>").appendTo(this.$newTerminal);
 				this.$newOperationsTerminal =$("<div class='option icon-power power'></div>").appendTo(this.$newTerminal);
 				this.$newScienceTerminal = $("<div class='option icon-science science'></div>").appendTo(this.$newTerminal);
-	
-	this.$name.on('click touchup', {target:this}, function(event){
+	/*
+	this.$name.on('click touchend', {target:this}, function(event){
 		if(!event.data.target.$element.hasClass("active")) { 
 			//event.stopPropagation();
 			event.preventDefault();
@@ -50,20 +50,31 @@ function Section (data){
 	        selection.addRange(range);
 	    }
 		event.stopPropagation();
-	});
+	});*/
+
+	this.$element.on('click touchend', {target: this}, function(event){event.data.target.closeAll(event)});
+	this.$newTerminal.on('click touchend', { target: this}, function(event){event.data.target.toggleNewTerminal(event)});
+	this.$newCommandTerminal.on('click touchend', {target:this, faction: 1}, function(event){event.data.target.clickNewTerminal(event)});
+	this.$newOperationsTerminal.on('click touchend', {target:this, faction: 2}, function(event){event.data.target.clickNewTerminal(event)});
+	this.$newScienceTerminal.on('click touchend', {target:this, faction: 3}, function(event){event.data.target.clickNewTerminal(event)});
 	
-	//this.$newTerminal.on('click touchup', { target: this}, function(event){event.data.target.toggleNewTerminal()});
-	this.$newCommandTerminal.on('click touchup', {target:this, faction: 1}, function(event){event.data.target.clickNewTerminal(event)});
-	this.$newOperationsTerminal.on('click touchup', {target:this, faction: 2}, function(event){event.data.target.clickNewTerminal(event)});
-	this.$newScienceTerminal.on('click touchup', {target:this, faction: 3}, function(event){event.data.target.clickNewTerminal(event)});
+	this.closeAll = function(event){
+		if(this.$newTerminal.hasClass('active')){
+			this.$newTerminal.removeClass('active');
+			event.stopPropagation();
+			event.preventDefault();
+		}
+	}
 	
-	/*this.toggleNewTerminal = function(){
-		console.log("blarg");
-		this.$newTerminal.toggleClass("selected");
-		this.$newCommandTerminal.text(TerminalCreateCost+"");
-		this.$newOperationsTerminal.text(TerminalCreateCost+"");
-		this.$newScienceTerminal.text(TerminalCreateCost+"");
-	}*/
+	this.toggleNewTerminal = function(event){
+		//console.log("blarg");
+		this.$newTerminal.toggleClass("active");
+		event.stopPropagation();
+		event.preventDefault();
+		//this.$newCommandTerminal.text(TerminalCreateCost+"");
+		//this.$newOperationsTerminal.text(TerminalCreateCost+"");
+		//this.$newScienceTerminal.text(TerminalCreateCost+"");
+	}
 	
 	this.$newCommandTerminal.text(TerminalCreateCost+"");
 	this.$newOperationsTerminal.text(TerminalCreateCost+"");
@@ -235,7 +246,7 @@ function Terminal (section, data) {
 			this.$cost = $("<div class='cost icon-"+getResourceNameFromFaction(this.faction)+"'></div>").appendTo(this.$upgrade);
 		this.$rank = $("<div class='rank'></div>").appendTo(this.$element);
 	
-	this.$upgrade.on('click touchup', { terminal: this }, function(event){
+	this.$upgrade.on('click touchend', { terminal: this }, function(event){
 		event.data.terminal.buyLevel();
 	});
 	

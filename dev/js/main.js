@@ -11,7 +11,7 @@ var TimeAmount = 10 * 1000; //ten seconds
 var TerminalTimeMultiplier = 0;// 10 * 1000;
 var lastTimestamp = 0;
 var TerminalResourceAmount = 5;
-var TerminalUpgradeCost = 600;
+var TerminalUpgradeCost = 100;
 var TerminalCreateCost = 50;
 
 var editing = false;
@@ -76,7 +76,7 @@ $(function(){
 		}
 	});
 	
-	$(".section .name").on('touchend click', function(){
+	$(".section .name").on('focus', function(){
 		if(editing) return;
 		
 		editing = true;

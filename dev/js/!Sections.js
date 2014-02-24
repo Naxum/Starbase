@@ -28,6 +28,8 @@ function Section (data){
 				this.$newCommandTerminal = $("<div class='option command icon-command'></div>").appendTo(this.$newTerminal);
 				this.$newOperationsTerminal =$("<div class='option icon-power power'></div>").appendTo(this.$newTerminal);
 				this.$newScienceTerminal = $("<div class='option icon-science science'></div>").appendTo(this.$newTerminal);
+				
+	this.$name.focus(function(event){this.select(); event.stopPropagation();});
 	/*
 	this.$name.on('click touchend', {target:this}, function(event){
 		if(!event.data.target.$element.hasClass("active")) { 

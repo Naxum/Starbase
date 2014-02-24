@@ -390,6 +390,10 @@ body {
 					color:black;
 					padding:40px 0;
 					
+					&:hover {
+						background:rgba(0,0,0,0.2);
+					}
+					
 					&::before {
 						content:'Add';
 						border:none;

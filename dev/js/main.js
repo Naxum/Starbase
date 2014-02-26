@@ -57,7 +57,7 @@ $(function(){
 			//move right
 			$("#station").sly('next');
 		}
-		
+		/*
 		if(event.keyCode == 85) { //u
 			//testing interaction of units
 			var unit = createNewUnit(randomFaction(), Math.floor(Math.random()*5));
@@ -73,9 +73,10 @@ $(function(){
 				
 				//unit.$element.appendTo(sections[0].$terminals.find(".terminal")[0]);
 			});
-		}
+		}*/
 	});
 	
+	//this is mainly to disable keyboard navigation while editing a room name
 	$(".section .name").on('focus', function(){
 		if(editing) return;
 		
@@ -83,7 +84,7 @@ $(function(){
 		
 		$(this).on('keypress', function(event){
 			if(event.keyCode == 13){
-				editing = false;
+				//editing = false;
 				$(this).blur();
 				
 				event.preventDefault();
@@ -92,6 +93,11 @@ $(function(){
 				event.preventDefault();
 				return false;
 			}
+		});
+		
+		$(this).on('blur', function(event){
+			editing = false;
+			$(this).off('blur keypress');
 		});
 	});
 	

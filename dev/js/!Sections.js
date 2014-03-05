@@ -17,7 +17,7 @@ function Section (data){
 	this.$element = $("<li class='section'></li>");
 	this.$interface = $("<div class='interface'></div>").appendTo(this.$element);
 	this.$info = $("<div class='info'></div>").appendTo(this.$element);
-		this.$name = $("<input class='name info-stat' spellcheck='false' value='' placeholder='Room Name'></input>").appendTo(this.$info);
+		this.$name = $("<input class='name info-stat' spellcheck='false' value='"+this.name+"' placeholder='Room Name'></input>").appendTo(this.$info);
 		//this.$level = $("<div class='level info-stat'>Level 1</div>").appendTo(this.$info);
 		this.$status = $("<div class='status info-stat'></div>").appendTo(this.$info);
 		this.$timebar = $("<div class='timebar'></div>").appendTo(this.$info);
@@ -329,7 +329,7 @@ function Terminal (section, data) {
 function addSection() {
 	var data = {
 		id: createUUID(),
-		name: "New Room - Click to edit",
+		name: "Room " + (sections.length+1),
 		terminals: []
 	};
 	

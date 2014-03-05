@@ -64,3 +64,22 @@ function Enumerator (index, name) {
 	this.index = index;
 	this.name = name;
 }
+
+function createStarfield(){
+	var $starfield = $("#starfield");
+	
+	var $star = $("<div class='star'></div>");
+	var $tmpStar;
+	
+	for(var i = 0; i < 300; i++){
+		$tmpStar = $star.clone();
+		$tmpStar.css({
+			opacity: Math.random(),
+			"animation-delay": (Math.random() * 5) + "s",
+			left: (Math.random()*100)+"%",
+			top: (Math.random()*100)+"%",
+			transform: "translateZ(0px) rotateZ("+(Math.random()*360)+"deg) scale("+(0.1+Math.random()*1)+")"
+		});
+		$tmpStar.appendTo($starfield);
+	}
+}

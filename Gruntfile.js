@@ -70,7 +70,7 @@ module.exports = function(grunt){
 			},
 			images: {
 				files: ['dev/images/**/*.{png,jpg,gif}'],
-				tasks: ['imagemin:base', 'responsive_images', 'imagemin:upscaled'],
+				tasks: ['imagemin:base'], //'responsive_images', 'imagemin:upscaled'
 				options: {
 					spawn: false
 				}
@@ -143,6 +143,7 @@ module.exports = function(grunt){
 					base: 'build',
 					open: true,
 					livereload:true,
+					hostname: 'localhost'
 					//keepalive: true
 				}
 			}

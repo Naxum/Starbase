@@ -19,7 +19,7 @@ var editing = false;
 //main function stuffs
 $(function(){
 	runHelpers();
-	
+	createStarfield();
 	//should load existing data here
 	
 	for(var i = 0; i < 5; i++) {

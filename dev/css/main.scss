@@ -10,14 +10,14 @@ $door-width: 70px;
 //@import 'fonts';
 
 @mixin pixel-render() {
-	image-rendering:optimizeSpeed;             /* Legal fallback */
-	image-rendering:-moz-crisp-edges;          /* Firefox        */
-	image-rendering:-o-crisp-edges;            /* Opera          */
-	image-rendering:-webkit-optimize-contrast; /* Safari         */
-	image-rendering:optimize-contrast;         /* CSS3 Proposed  */
-	image-rendering:crisp-edges;               /* CSS4 Proposed  */
-	image-rendering:pixelated;                 /* CSS4 Proposed  */
-	-ms-interpolation-mode:nearest-neighbor;   /* IE8+           */
+	// image-rendering:optimizeSpeed;             /* Legal fallback */
+	// image-rendering:-moz-crisp-edges;          /* Firefox        */
+	// image-rendering:-o-crisp-edges;            /* Opera          */
+	// image-rendering:-webkit-optimize-contrast; /* Safari         */
+	// image-rendering:optimize-contrast;         /* CSS3 Proposed  */
+	// image-rendering:crisp-edges;               /* CSS4 Proposed  */
+	// image-rendering:pixelated;                 /* CSS4 Proposed  */
+	// -ms-interpolation-mode:nearest-neighbor;   /* IE8+           */
 }
 
 html {
@@ -33,6 +33,7 @@ body {
     font-weight: 200;
     //text-rendering: geometricPrecision;
     text-rendering: optimizeLegibility;
+    user-select:none;
 }
 
 #broken {
@@ -51,7 +52,7 @@ body {
 //add some cool stuff back here for rotating stars!
 #space-bg {
 	background: {
-		image: url('../images/warp-upscaled.png');
+		//image: url('../images/warp-upscaled.png');
 		repeat:repeat;
 		position:0 0;
 	}
@@ -69,6 +70,45 @@ body {
 }
 
 .icon-money:before { content: '$'; }
+
+#starfield {
+	position:absolute;
+	width:100%;
+	height:200%;
+	left:0%;
+	top:-50%;
+	transform-origin:center;
+	animation:rotate 180s linear infinite;
+	
+	.star {
+		position: absolute;
+		background-color:white;
+		width:5px;
+		height:5px;
+		//animation:twinkle 1s infinite;
+	}
+}
+
+@keyframes twinkle {
+	0% {
+		opacity:1;
+	}
+	50% {
+		opacity:0;
+	}
+	100% {
+		opacity:1
+	}
+}
+
+@keyframes rotate {
+	from {
+		transform: rotateZ(0deg);
+	}
+	to {
+		transform: rotateZ(360deg);
+	}
+}
 
 #space {
 	height:100%;
@@ -257,8 +297,11 @@ body {
 	width:$section-width;
 	height:$section-height;
 	
-	background:white;
+	background-image:url('../images/background@2x.png');
+	background-size:contain;
+	background-repeat:no-repeat;
 	margin:0 4px;
+	user-select:none;
 	
 	&:not(.active) {
 		cursor:pointer;
@@ -322,6 +365,7 @@ body {
 			width: 100%;
 			height: 4px;
 			z-index: 0;
+			user-select:none;
 			background: {
 				color: transparent;
 				image: url('../images/timebar-upscaled.png');
@@ -386,12 +430,12 @@ body {
 				//border-bottom:4px solid black;
 				
 				&.new {
-					background:rgba(0,0,0,0.1);
+					background:rgba(255,255,255,0.8);
 					color:black;
 					padding:40px 0;
 					
 					&:hover {
-						background:rgba(0,0,0,0.2);
+						background:rgba(255,255,255,1);
 					}
 					
 					&::before {
@@ -407,7 +451,7 @@ body {
 					}
 					
 					&.active {
-						background:rgba(0,0,0,0.25);
+						background:rgba(255,255,255,1);
 						color: white;
 						padding:0;
 					}
@@ -604,6 +648,8 @@ body {
 }
 
 footer {
+	display:none;
+	
 	position:fixed;
 	bottom:0;
 	text-align:center;
@@ -724,9 +770,24 @@ $ground-height: 40%;//250px
 }
 */
 
+@media (max-width: 900px) {
+	#starfield {
+		display:none;
+	}
+	
+	#space {
+		transform:scale(0.7);
+	}
+	
+	#space #stats .stat {
+		min-width: 70px !important;
+		max-width: 150px !important;
+	}
+}
+/*
 @media (max-width: 890px){
 	body { display:flex; align-items:center; }
 	#space { display: none; }
 	footer { display: none; }
 	#broken { display:block; }
-}
+}*/
